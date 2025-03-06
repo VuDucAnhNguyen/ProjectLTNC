@@ -7,89 +7,29 @@ const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 const string WINDOW_TITLE = "An Implementation of Code.org Painter";
 
-void logSDLError(std::ostream& os, const std::string &msg, bool fatal = false);
-void initSDL(SDL_Window* &window, SDL_Renderer* &renderer);
-void quitSDL(SDL_Window* window, SDL_Renderer* renderer);
-void waitUntilKeyPressed();
 
 int main(int argc, char* argv[])
 {
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-    initSDL(window, renderer);
+    SDL_Window* window=NULL;
 
-    // Your drawing code here
-    // use SDL_RenderPresent(renderer) to show it
-    SDL_RenderClear(renderer);
+    SDL_Surface* screenSurface=NULL;
 
-    //Draw point
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // white
-    SDL_RenderDrawPoint(renderer, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-
-    //Draw line
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // red
-    SDL_RenderDrawLine(renderer, 50, 50, 300, 300);
-
-    //Draw rectangle
-    SDL_Rect filled_rect;
-    filled_rect.x = SCREEN_WIDTH - 400;
-    filled_rect.y = SCREEN_HEIGHT - 150;
-    filled_rect.w = 320;
-    filled_rect.h = 100;
-    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // green
-    SDL_RenderFillRect(renderer, &filled_rect);
-
-    SDL_RenderPresent(renderer);
-
-	waitUntilKeyPressed();
-    quitSDL(window, renderer);
+    if (SDL_Init(SDL_INIT_VIDEO)<0){
+        cout << "ERROR: "<<SDL_GetError();
+    } else {
+        window =SDL_CreateWindow("SDL try", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        if (window==NULL){
+            cout <<"ERROR: "<<SDL_GetError();
+        } else {
+            screenSurface= SDL_GetWindowSurface(window);
+            SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, 0xFF, 0xFF, 0xFF ));
+            SDL_UpdateWindowSurface( window );
+            SDL_Event e; bool quit = false; while( quit == false ){ while( SDL_PollEvent( &e ) ){ if( e.type == SDL_QUIT ) quit = true; } }
+        }
+    }
+    SDL_DestroyWindow( window);
+    SDL_Quit();
     return 0;
 }
 
-void logSDLError(std::ostream& os, const std::string &msg, bool fatal)
-{
-    os << msg << " Error: " << SDL_GetError() << std::endl;
-    if (fatal)
-    {
-        SDL_Quit();
-        exit(1);
-    }
-}
 
-void initSDL(SDL_Window* &window, SDL_Renderer* &renderer)
-{
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
-        logSDLError(std::cout, "SDL_Init", true);
-
-    window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    //window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP);
-
-    if (window == nullptr)
-        logSDLError(std::cout, "CreateWindow", true);
-
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    //SDL_Renderer *renderer = SDL_CreateSoftwareRenderer(SDL_GetWindowSurface(window));
-    if (renderer == nullptr)
-        logSDLError(std::cout, "CreateRenderer", true);
-
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-    SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
-}
-
-void quitSDL(SDL_Window* window, SDL_Renderer* renderer)
-{
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
-}
-
-void waitUntilKeyPressed()
-{
-    SDL_Event e;
-    while (true)
-    {
-        if (SDL_WaitEvent(&e) != 0 && (e.type == SDL_KEYDOWN || e.type == SDL_QUIT))
-            return;
-        SDL_Delay(100);
-    }
-}
