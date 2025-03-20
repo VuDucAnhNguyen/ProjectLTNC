@@ -65,7 +65,11 @@ struct object{
     }
 
     void falling(){
-
+        y += speed;
+        if (y > SCREEN_HEIGHT - 30 - height){
+            y = SCREEN_HEIGHT - 30 - height;
+            velocity = 0;
+        }
     }
 };
 
@@ -168,6 +172,13 @@ SDL_Texture* loadTexture( string path ){
 	return newTexture;
 }
 
+bool checkCollision(SDL_Rect a, SDL_Rect b) {
+    return (a.x + a.w > b.x) &&
+           (a.x < b.x + b.w) &&
+           (a.y + a.h > b.y) &&
+           (a.y < b.y + b.h);
+}
+
 int main( int argc, char* args[] ){
     srand(time(0));
 
@@ -184,7 +195,7 @@ int main( int argc, char* args[] ){
 			SDL_Event e;
 
 			object basket((SCREEN_WIDTH - 100) / 2, (SCREEN_HEIGHT - 100), 90, 65, 0, 7);
-			object banana(rand()%(SCREEN_WIDTH*62/64-50)+(SCREEN_WIDTH /64), 50, 50, 44, 0 ,7);
+			object banana(rand()%(SCREEN_WIDTH*62/64-50)+(SCREEN_WIDTH /64), -50, 50, 44, 0 ,2);
 
 
 			while( !quit ){
@@ -197,6 +208,13 @@ int main( int argc, char* args[] ){
 				}
 
                 basket.moving();
+                banana.falling();
+
+                if (checkCollision(basket.rect(), banana.rect())) {
+                    banana.y = -50;
+                    banana.x = rand() % (rand()%(SCREEN_WIDTH*62/64-50))+(SCREEN_WIDTH /64);
+
+                }
 
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );
@@ -206,6 +224,7 @@ int main( int argc, char* args[] ){
                 SDL_RenderCopy(gRenderer, gbasketTexture, NULL, &basketRect);
                 SDL_Rect bananaRect=banana.rect();
                 SDL_RenderCopy(gRenderer, gbananaTexture, NULL, &bananaRect);
+
 
                 SDL_Rect fillRect = { SCREEN_WIDTH /64, SCREEN_HEIGHT -30, SCREEN_WIDTH *62/64, SCREEN_HEIGHT /64 };
                 SDL_SetRenderDrawColor( gRenderer, 0xFF, 0x00, 0x00, 0xFF );
