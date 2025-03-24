@@ -16,6 +16,7 @@ const string imgbanana = "image_project/banana.png";
 const string img10pts = "image_project/10pts.png";
 const string imglosebanner = "image_project/losebanner.png";
 const string fontBoldonse = "font_project/Boldonse-Regular.ttf";
+const string fontHanaleiFill = "font_project/HanaleiFill-Regular.ttf";
 
 Uint32 startTime = SDL_GetTicks();
 const int FRAME_RATE = 60;
@@ -27,6 +28,7 @@ bool init();
 bool loadMedia();
 void close();
 SDL_Texture* loadTexture( string path );
+void renderText(SDL_Renderer*, TTF_Font*, string, SDL_Color, int, int);
 
 
 SDL_Window* gWindow = NULL;
@@ -36,7 +38,8 @@ SDL_Texture* gbackgroundTexture = NULL;
 SDL_Texture* gbananaTexture=NULL;
 SDL_Texture* g10ptsTexture=NULL;
 SDL_Texture* glosebannerTexture=NULL;
-TTF_Font* gfont =NULL;
+TTF_Font* Boldonsefont =NULL;
+TTF_Font* HanaleiFillfont =NULL;
 
 
 
@@ -77,13 +80,30 @@ struct object{
     }
 };
 
+struct textDisplay{
+    string display;
+    TTF_Font* font;
+    int x, y, textWidth=0, textHeight=0, font_size, speed;
+
+    textDisplay(string _display, TTF_Font* _font, int _x, int _y, int _font_size, int _speed){
+        display=_display;
+        font=_font;
+        x=_x;
+        y=_y;
+        font_size=_font_size;
+        speed=_speed;
+    }
+
+    void showtext (Uint8 r, Uint8 g, Uint8 b, Uint8 alpha){
+        SDL_Color textColor = { r, g, b, alpha };
+        renderText(gRenderer, font, display, textColor, x, y);
+    }
+};
 
 
 
 
-
-bool init()
-{
+bool init(){
 	bool success = true;
 
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 ){
@@ -127,8 +147,7 @@ bool init()
 	return success;
 }
 
-bool loadMedia()
-{
+bool loadMedia(){
 	bool success = true;
 
 	gbackgroundTexture = loadTexture(imgbackground);
@@ -161,8 +180,14 @@ bool loadMedia()
         success = false;
     }
 
-    gfont = TTF_OpenFont(fontBoldonse.c_str(), 14);
-    if (gfont == NULL) {
+    Boldonsefont = TTF_OpenFont(fontBoldonse.c_str(), 14);
+    if (Boldonsefont == NULL) {
+        cout << "Failed to load font! TTF Error: " << TTF_GetError() << endl;
+        success = false;
+    }
+
+    HanaleiFillfont = TTF_OpenFont(fontHanaleiFill.c_str(), 48);
+    if (HanaleiFillfont == NULL) {
         cout << "Failed to load font! TTF Error: " << TTF_GetError() << endl;
         success = false;
     }
@@ -178,10 +203,12 @@ void close(){
     SDL_DestroyTexture(glosebannerTexture);
 	SDL_DestroyRenderer( gRenderer );
 	SDL_DestroyWindow( gWindow );
-	TTF_CloseFont(gfont);
+	TTF_CloseFont(Boldonsefont);
+	TTF_CloseFont(HanaleiFillfont);
 	gWindow = NULL;
 	gRenderer = NULL;
-	gfont = NULL;
+	Boldonsefont = NULL;
+	HanaleiFillfont = NULL;
 
 	TTF_Quit();
 	IMG_Quit();
@@ -241,6 +268,7 @@ int main( int argc, char* args[] ){
     object img10pts (-100, -100, 40, 40, 0);
     object losebanner(SCREEN_WIDTH/8, SCREEN_HEIGHT+10, SCREEN_WIDTH*3/4, SCREEN_HEIGHT*3/4, 10);
     int score = 0;
+
     bool bannerMovingUp =true;
     bool collisionWithLine = false;
     srand(time(0));
@@ -256,6 +284,11 @@ int main( int argc, char* args[] ){
 			bool quit = false;
 
 			SDL_Event e;
+
+			textDisplay textscore("Score: "+to_string(score), Boldonsefont, 0, 10, 14, 0);
+            textDisplay textYoulose("YOU LOSE!", HanaleiFillfont, 0, SCREEN_HEIGHT+100, 48, 10);
+            TTF_SizeText(HanaleiFillfont,"YOU LOSE!", &textYoulose.textWidth, &textYoulose.textHeight);
+            textYoulose.x = (SCREEN_WIDTH-textYoulose.textWidth)/2;
 
 			while( !quit ){
                 Uint32 frameStart = SDL_GetTicks();
@@ -284,6 +317,8 @@ int main( int argc, char* args[] ){
                     banana.y = -50;
                     banana.x = rand() % (rand()%(SCREEN_WIDTH*62/64-50))+(SCREEN_WIDTH /64);
                     score +=10;
+
+                    textscore.display="Score: "+to_string(score);
 
                     img10appear = true;
                     img10collision = SDL_GetTicks();
@@ -324,6 +359,7 @@ int main( int argc, char* args[] ){
 
                     if (bannerMovingUp) {
                         losebanner.y -= losebanner.speed;
+                        textYoulose.y -= textYoulose.speed;
                         if (losebanner.y <= SCREEN_HEIGHT /8) {
                             bannerMovingUp = false;
                         }
@@ -331,13 +367,16 @@ int main( int argc, char* args[] ){
                     SDL_Rect losebannerRect=losebanner.rect();
                     SDL_RenderCopy(gRenderer, glosebannerTexture, NULL, &losebannerRect);
 
+                    textYoulose.showtext(255, 0, 0, 255);
+
                 } else{
                     SDL_Rect fillRect = { SCREEN_WIDTH /64, SCREEN_HEIGHT -30, SCREEN_WIDTH *62/64, SCREEN_HEIGHT /64 };
                     SDL_SetRenderDrawColor( gRenderer, 0xFF, 0x00, 0x00, 0xFF );
                     SDL_RenderFillRect( gRenderer, &fillRect );
 
-                    SDL_Color textColor = { 255, 165, 0, 255 };
-                    renderText(gRenderer, gfont, "Score: " + to_string(score), textColor, SCREEN_WIDTH - 125, 10);
+                    TTF_SizeText(Boldonsefont,("Score: "+to_string(score)).c_str(), &textscore.textWidth, &textscore.textHeight);
+                    textscore.x= SCREEN_WIDTH-textscore.textWidth;
+                    textscore.showtext(255, 165, 0 ,255);
                 }
 
                 SDL_RenderPresent( gRenderer );
