@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="game" />
+		<Option title="MonkeyDave" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/game" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/MonkeyDave" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/game" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/MonkeyDave" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -32,9 +32,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Initclose.cpp" />
+		<Unit filename="Initclose.h" />
+		<Unit filename="loadFont..cpp" />
+		<Unit filename="loadFont.h" />
+		<Unit filename="loadTexture.cpp" />
+		<Unit filename="loadTexture.h" />
 		<Unit filename="main.cpp" />
-		<Extensions>
-			<lib_finder disable_auto="1" />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

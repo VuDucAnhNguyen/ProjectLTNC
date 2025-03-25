@@ -1,5 +1,0 @@
-# depslib dependency file v1.0
-1739766580 source:c:\game\main.cpp
-	<iostream>
-	<SDL.h>
-

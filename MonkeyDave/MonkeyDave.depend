@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1742893915 source:d:\code\github\projectltnc\monkeydave\initclose.cpp
+	"Initclose.h"
+
+1742893915 d:\code\github\projectltnc\monkeydave\initclose.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<string>
+	<iostream>
+
+1742893915 source:d:\code\github\projectltnc\monkeydave\loadtexture.cpp
+	"loadTexture.h"
+
+1742893915 d:\code\github\projectltnc\monkeydave\loadtexture.h
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+
+1742894873 source:d:\code\github\projectltnc\monkeydave\main.cpp
+	<cstdlib>
+	<ctime>
+	"Initclose.h"
+	"loadFont.h"
+	"loadTexture.h"
+
+1742894873 source:d:\code\github\projectltnc\monkeydave\loadfont..cpp
+	"loadFont.h"
+	<iostream>
+
+1742894643 d:\code\github\projectltnc\monkeydave\loadfont.h
+	<SDL_ttf.h>
+
