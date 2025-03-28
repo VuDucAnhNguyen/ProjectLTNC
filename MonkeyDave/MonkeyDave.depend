@@ -1,6 +1,8 @@
 # depslib dependency file v1.0
-1742893915 source:d:\code\github\projectltnc\monkeydave\initclose.cpp
+1743159990 source:d:\code\github\projectltnc\monkeydave\initclose.cpp
 	"Initclose.h"
+	"loadFont.h"
+	"loadTexture.h"
 
 1742893915 d:\code\github\projectltnc\monkeydave\initclose.h
 	<SDL.h>
@@ -9,20 +11,22 @@
 	<string>
 	<iostream>
 
-1742893915 source:d:\code\github\projectltnc\monkeydave\loadtexture.cpp
+1743159964 source:d:\code\github\projectltnc\monkeydave\loadtexture.cpp
 	"loadTexture.h"
 
-1742893915 d:\code\github\projectltnc\monkeydave\loadtexture.h
+1743160108 d:\code\github\projectltnc\monkeydave\loadtexture.h
 	<SDL.h>
 	<SDL_image.h>
 	<iostream>
 
-1742894873 source:d:\code\github\projectltnc\monkeydave\main.cpp
+1743159905 source:d:\code\github\projectltnc\monkeydave\main.cpp
 	<cstdlib>
 	<ctime>
 	"Initclose.h"
 	"loadFont.h"
 	"loadTexture.h"
+	"object.h"
+	"MonkeyAnimation.h"
 
 1742894873 source:d:\code\github\projectltnc\monkeydave\loadfont..cpp
 	"loadFont.h"
@@ -30,4 +34,25 @@
 
 1742894643 d:\code\github\projectltnc\monkeydave\loadfont.h
 	<SDL_ttf.h>
+
+1743159943 source:d:\code\github\projectltnc\monkeydave\loadfont.cpp
+	"loadFont.h"
+	<iostream>
+
+1743160108 d:\code\github\projectltnc\monkeydave\object.h
+	<SDL.h>
+
+1743160108 d:\code\github\projectltnc\monkeydave\monkeyanimation.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"loadTexture.h"
+	"object.h"
+
+1743160012 source:d:\code\github\projectltnc\monkeydave\monkeyanimation.cpp
+	"MonkeyAnimation.h"
+
+1743160025 source:d:\code\github\projectltnc\monkeydave\object.cpp
+	"object.h"
+	"Initclose.h"
 

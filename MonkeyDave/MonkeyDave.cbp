@@ -34,11 +34,15 @@
 		</Compiler>
 		<Unit filename="Initclose.cpp" />
 		<Unit filename="Initclose.h" />
-		<Unit filename="loadFont..cpp" />
+		<Unit filename="MonkeyAnimation.cpp" />
+		<Unit filename="MonkeyAnimation.h" />
+		<Unit filename="loadFont.cpp" />
 		<Unit filename="loadFont.h" />
 		<Unit filename="loadTexture.cpp" />
 		<Unit filename="loadTexture.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="object.cpp" />
+		<Unit filename="object.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

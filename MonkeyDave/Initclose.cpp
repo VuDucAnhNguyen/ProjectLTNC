@@ -1,7 +1,9 @@
 #include "Initclose.h"
+#include "loadFont.h"
+#include "loadTexture.h"
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 960;
+const int SCREEN_HEIGHT = 720;
 
 SDL_Window* gWindow = nullptr;
 SDL_Renderer* gRenderer = nullptr;
@@ -47,6 +49,8 @@ bool init() {
 }
 
 void close() {
+    destroyFonts();
+	destroyTextures();
     SDL_DestroyRenderer(gRenderer);
     SDL_DestroyWindow(gWindow);
     gWindow = nullptr;

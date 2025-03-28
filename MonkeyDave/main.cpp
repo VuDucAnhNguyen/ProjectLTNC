@@ -3,52 +3,24 @@
 #include "Initclose.h"
 #include "loadFont.h"
 #include "loadTexture.h"
+#include "object.h"
+#include "MonkeyAnimation.h"
 
 
 Uint32 startTime = SDL_GetTicks();
 const int FRAME_RATE = 60;
 const int FRAME_DELAY = 1000 / FRAME_RATE;
 Uint32 img10collision = 0;
+
 bool img10appear = false;
+
+
+
 
 void renderText(SDL_Renderer*, TTF_Font*, string, SDL_Color , int , int );
 
 
-struct object{
-    int x, y, width, height, speed;
 
-    object(int _x,int _y,int _width,int _height,int _speed){
-        x=_x;
-        y=_y;
-        width=_width;
-        height=_height;
-        speed=_speed;
-    }
-
-    SDL_Rect rect() {
-    return SDL_Rect{ x, y, width, height };
-    }
-
-    void moving(){
-        const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-            if (currentKeyStates[SDL_SCANCODE_LEFT]){
-                x-= speed;
-            }
-            else if (currentKeyStates[SDL_SCANCODE_RIGHT]){
-                x+= speed;
-            }
-
-        if (x < 0) x = 0;
-        if (x > SCREEN_WIDTH - 100) x = SCREEN_WIDTH - 100;
-    }
-
-    void falling(){
-        y += speed;
-        if (y > SCREEN_HEIGHT - 30 - height){
-            y = SCREEN_HEIGHT - 30 - height;
-        }
-    }
-};
 
 struct textDisplay{
     string display;
@@ -94,12 +66,6 @@ void renderText(SDL_Renderer* renderer, TTF_Font* gfont, string text, SDL_Color 
     }
 }
 
-void clearAll (){
-    destroyFonts();
-	destroyTextures();
-    close();
-}
-
 
 
 bool checkCollision(SDL_Rect a, SDL_Rect b) {
@@ -110,14 +76,10 @@ bool checkCollision(SDL_Rect a, SDL_Rect b) {
 }
 
 int main( int argc, char* args[] ){
-    object basket((SCREEN_WIDTH - 100) / 2, (SCREEN_HEIGHT - 100), 90, 65, 8);
-    object banana(rand()%(SCREEN_WIDTH*62/64-50)+(SCREEN_WIDTH /64), -50, 50, 44, 7);
-    object img10pts (-100, -100, 40, 40, 0);
-    object losebanner(SCREEN_WIDTH/8, SCREEN_HEIGHT+10, SCREEN_WIDTH*3/4, SCREEN_HEIGHT*3/4, 10);
     int score = 0;
-
     bool bannerMovingUp =true;
     bool collisionWithLine = false;
+
     srand(time(0));
 
 	if( !init() ){
@@ -133,31 +95,100 @@ int main( int argc, char* args[] ){
 			SDL_Event e;
 
 			textDisplay textscore("Score: "+to_string(score), Boldonsefont14, 0, 10, 14, 0);
-            textDisplay textYoulose("YOU LOSE!", HanaleiFillfont48, 0, SCREEN_HEIGHT+100, 48, 10);
+            textDisplay textYoulose("YOU LOSE!", HanaleiFillfont48, 0, SCREEN_HEIGHT+150, 48, 10);
             TTF_SizeText(HanaleiFillfont48,"YOU LOSE!", &textYoulose.textWidth, &textYoulose.textHeight);
             textYoulose.x = (SCREEN_WIDTH-textYoulose.textWidth)/2;
 
 			while( !quit ){
                 Uint32 frameStart = SDL_GetTicks();
+                Uint32 currentTime = SDL_GetTicks();
+
+                if (isleft){
+                    currentClip=&defaultMonkeyLeft;
+                } else {
+                    currentClip=&defaultMonkeyRight;
+                }
+
+                bool isOnPlatform = false;
+                MonkeyFall(currentClip, monkey.y,isOnPlatform, isJump, isleft);
 
 				while( SDL_PollEvent( &e ) != 0 ){
 					if( e.type == SDL_QUIT ){
 						quit = true;
 					}
+					if (e.type == SDL_KEYDOWN) {
+                        lastInputTime = currentTime;
+                        isBlinking = false;
+                    }
+                    if (e.key.keysym.sym == SDLK_LEFT) {
+                        isleft = true;
+                    }
+                    if (e.key.keysym.sym == SDLK_RIGHT) {
+                        isleft = false;
+                    }
+                    if (e.key.keysym.sym == SDLK_UP&&isOnPlatform) {
+                        isJump = true;
+                    }
+                    if (e.key.keysym.sym == SDLK_DOWN&&isOnPlatform){
+                        fallthrough = true;
+                    }
 				}
+				if (!isBlinking && currentTime - lastInputTime > 2000) {
+                    isBlinking = true;
+                    blinkStartTime = SDL_GetTicks();
+                }
+                if (isBlinking) {
+                    Monkeyblink(currentClip, blinkStartTime, isBlinking, isleft);
+                    lastInputTime=currentTime;
+                }
 
-				if (banana.y+banana.height >= SCREEN_HEIGHT-30){
+                const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+                if (currentKeyStates[SDL_SCANCODE_LEFT]) {
+                    if (isJump||isFall){
+                    monkey.x -= monkey.speed;
+                    isleft = true;
+                    } else {
+                        if (!isrunning) {
+                        runStartTime = SDL_GetTicks();
+                    }
+                    isrunning = true;
+                    isleft = true;
+                    Monkeyrun(currentClip, runStartTime, isleft);
+                    }
+                } else if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
+                    if (isJump||isFall){
+                    monkey.x += monkey.speed;
+                    isleft = false;
+                    } else {
+                        if (!isrunning) {
+                        runStartTime = SDL_GetTicks();
+                    }
+                    isrunning = true;
+                    isleft = false;
+                    Monkeyrun(currentClip, runStartTime, isleft);
+                    }
+                } else {
+                    isrunning = false;
+                }
+                if (monkey.x < 0) monkey.x = 0;
+                if (monkey.x > SCREEN_WIDTH - 100) monkey.x = SCREEN_WIDTH - 100;
+
+                if (isJump) {
+                    MonkeyJump(currentClip, monkey.y, isJump, isleft);
+                }
+
+
+				if (banana.y+banana.height >= SCREEN_HEIGHT||monkey.y+monkey.height>=SCREEN_HEIGHT){
                     collisionWithLine = true;
 				}
 
                 if (!collisionWithLine){
-                basket.moving();
                     if (SDL_GetTicks()-startTime>3000){
                         banana.falling();
                     }
                 }
 
-                if (checkCollision(basket.rect(), banana.rect())) {
+                if (checkCollision(monkey.rect(), banana.rect())) {
                     img10pts.x = banana.x;
                     img10pts.y = banana.y;
 
@@ -181,29 +212,55 @@ int main( int argc, char* args[] ){
 				SDL_RenderClear( gRenderer );
 
 				if (collisionWithLine) {
-                    SDL_SetTextureColorMod(gbackgroundTexture, 100, 100, 100);
+                    SDL_SetTextureColorMod(gbackgroundjungleTexture, 100, 100, 100);
                     SDL_SetTextureColorMod(gbananaTexture, 100, 100, 100);
-                    SDL_SetTextureColorMod(gbasketTexture, 100, 100, 100);
+                    SDL_SetTextureColorMod(gplatformTexture, 100, 100, 100);
+                    SDL_SetTextureColorMod(gmonkeystaystandrightTexture, 100, 100, 100);
                 } else {
-                    SDL_SetTextureColorMod(gbackgroundTexture, 255, 255, 255);
+                    SDL_SetTextureColorMod(gbackgroundjungleTexture, 255, 255, 255);
                     SDL_SetTextureColorMod(gbananaTexture, 255, 255, 255);
-                    SDL_SetTextureColorMod(gbasketTexture, 255, 255, 255);
+                    SDL_SetTextureColorMod(gplatformTexture, 255, 255, 255);
+                    SDL_SetTextureColorMod(gmonkeystaystandrightTexture, 255, 255 ,255);
                 }
 
-                SDL_RenderCopy(gRenderer, gbackgroundTexture, NULL, NULL);
-                SDL_Rect basketRect=basket.rect();
-                SDL_RenderCopy(gRenderer, gbasketTexture, NULL, &basketRect);
+                SDL_RenderCopy(gRenderer, gbackgroundjungleTexture, NULL, NULL);
+                for (int i=0;i<7;i++){
+                    SDL_Rect platformRect=platform[i].rect();
+                    SDL_RenderCopy(gRenderer, gplatformTexture, NULL, &platformRect);
+                }
                 SDL_Rect bananaRect=banana.rect();
                 SDL_RenderCopy(gRenderer, gbananaTexture, NULL, &bananaRect);
                 SDL_Rect img10ptsRect=img10pts.rect();
                 SDL_RenderCopy(gRenderer, g10ptsTexture, NULL, &img10ptsRect);
 
+                if (isJump){
+                    if (isleft){
+                        renderMonkey(gRenderer, gmonkeyjumpandfallleftTexture, currentClip);
+                    } else {
+                        renderMonkey(gRenderer, gmonkeyjumpandfallrightTexture, currentClip);
+                    }
+                } else if (isFall){
+                    if (isleft){
+                        renderMonkey(gRenderer, gmonkeyjumpandfallleftTexture, currentClip);
+                    } else {
+                        renderMonkey(gRenderer, gmonkeyjumpandfallrightTexture, currentClip);
+                    }
+                } else if (isrunning){
+                    if (isleft){
+                        renderMonkey(gRenderer, gmonkeyrunningleftTexture, currentClip);
+                    } else {
+                        renderMonkey(gRenderer, gmonkeyrunningrightTexture, currentClip);
+                    }
+                } else{
+                    if (isleft){
+                        renderMonkey(gRenderer, gmonkeystaystandleftTexture, currentClip);
+                    } else {
+                        renderMonkey(gRenderer, gmonkeystaystandrightTexture, currentClip);
+                    }
+                }
+
 
                 if (collisionWithLine) {
-                    SDL_Rect fillRect = { SCREEN_WIDTH /64, SCREEN_HEIGHT -30, SCREEN_WIDTH *62/64, SCREEN_HEIGHT /64 };
-                    SDL_SetRenderDrawColor( gRenderer, 128, 0x00, 0x00, 0xFF );
-                    SDL_RenderFillRect( gRenderer, &fillRect );
-
                     if (bannerMovingUp) {
                         losebanner.y -= losebanner.speed;
                         textYoulose.y -= textYoulose.speed;
@@ -217,10 +274,6 @@ int main( int argc, char* args[] ){
                     textYoulose.showtext(255, 0, 0, 255);
 
                 } else{
-                    SDL_Rect fillRect = { SCREEN_WIDTH /64, SCREEN_HEIGHT -30, SCREEN_WIDTH *62/64, SCREEN_HEIGHT /64 };
-                    SDL_SetRenderDrawColor( gRenderer, 0xFF, 0x00, 0x00, 0xFF );
-                    SDL_RenderFillRect( gRenderer, &fillRect );
-
                     TTF_SizeText(Boldonsefont14,("Score: "+to_string(score)).c_str(), &textscore.textWidth, &textscore.textHeight);
                     textscore.x= SCREEN_WIDTH-textscore.textWidth;
                     textscore.showtext(255, 165, 0 ,255);
@@ -235,7 +288,7 @@ int main( int argc, char* args[] ){
 			}
 		}
 	}
-	clearAll();
+	close();
 
 	return 0;
 }
