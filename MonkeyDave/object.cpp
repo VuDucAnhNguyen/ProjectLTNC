@@ -23,17 +23,17 @@ void object::falling() {
 }
 
 
-object banana(rand() % (SCREEN_WIDTH * 62 / 64 - 50) + (SCREEN_WIDTH / 64), -50, 50, 44, 3);
+object banana(rand() % (SCREEN_WIDTH * 62 / 64 - 50) + (SCREEN_WIDTH / 64), -50, 50, 44, 4);
 object img10pts(-100, -100, 40, 40, 0);
 object losebanner(SCREEN_WIDTH / 8, SCREEN_HEIGHT + 10, SCREEN_WIDTH * 3 / 4, SCREEN_HEIGHT * 3 / 4, 10);
 object monkey((SCREEN_WIDTH - 100) / 2, SCREEN_HEIGHT - 375, 100, 100, 5);
 object platform[7] = {
-    object((SCREEN_WIDTH-400)/2, SCREEN_HEIGHT-275, 400, 40, 0),
-    object(0, SCREEN_HEIGHT-425, 400, 40, 0),
-    object(SCREEN_WIDTH-400, SCREEN_HEIGHT-425, 400, 40, 0),
-    object(75, SCREEN_HEIGHT-575, 250, 40, 0),
-    object(SCREEN_WIDTH-325, SCREEN_HEIGHT-575, 250, 40, 0),
-    object(100, SCREEN_HEIGHT-125, 150, 40, 0),
-    object(SCREEN_WIDTH-250, SCREEN_HEIGHT-125, 150, 40, 0)
+    object((SCREEN_WIDTH-400)/2, SCREEN_HEIGHT-225, 400, 40, 0),
+    object(0, SCREEN_HEIGHT-350, 400, 40, 0),
+    object(SCREEN_WIDTH-400, SCREEN_HEIGHT-350, 400, 40, 0),
+    object(100, SCREEN_HEIGHT-485, 225, 40, 0),
+    object(SCREEN_WIDTH-350, SCREEN_HEIGHT-485, 225, 40, 0),
+    object(125, SCREEN_HEIGHT-125, 125, 40, 0),
+    object(SCREEN_WIDTH-275, SCREEN_HEIGHT-125, 125, 40, 0)
 };
 

@@ -1,5 +1,5 @@
 #include "MonkeyAnimation.h"
-
+#include "Initclose.h"
 
 
 SDL_Rect defaultMonkeyRight = { 0, 0, 230, 255 };
@@ -32,7 +32,7 @@ bool isleft=false;
 bool fallthrough=false;
 Uint32 blinkStartTime = 0;
 Uint32 runStartTime=0;
-int jumpvelocity = 20;
+int jumpvelocity = 16;
 int fallvelocity =4;
 
 bool isStandingOn(SDL_Rect rectA,SDL_Rect rectB) {
@@ -51,7 +51,7 @@ void MonkeyJump (SDL_Rect*& currentClip, int &y, bool& isJump, bool& isleft){
                 jumpvelocity--;
             } else {
                 isJump= false;
-                jumpvelocity=20;
+                jumpvelocity=16;
             }
         }
     } else{
@@ -62,7 +62,7 @@ void MonkeyJump (SDL_Rect*& currentClip, int &y, bool& isJump, bool& isleft){
                 jumpvelocity--;
             } else {
                 isJump= false;
-                jumpvelocity=20;
+                jumpvelocity=16;
             }
         }
     }
@@ -170,8 +170,69 @@ void Monkeyrun(SDL_Rect*& currentClip, Uint32& runStartTime, bool isleft) {
     }
 }
 
+void Monkeymain (bool& isBlinking){
+    Uint32 currentTime = SDL_GetTicks();
+    if (isleft){
+        currentClip=&defaultMonkeyLeft;
+    } else {
+        currentClip=&defaultMonkeyRight;
+    }
+
+    bool isOnPlatform = false;
+    MonkeyFall(currentClip, monkey.y,isOnPlatform, isJump, isleft);
+
+    const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+    if (currentKeyStates[SDL_SCANCODE_UP]&&isOnPlatform){
+        isJump=true;
+    } else if (currentKeyStates[SDL_SCANCODE_DOWN] && isOnPlatform){
+        fallthrough=true;
+    } else if (currentKeyStates[SDL_SCANCODE_LEFT]) {
+        if (isJump||isFall){
+            monkey.x -= monkey.speed;
+            isleft = true;
+        } else {
+            if (!isrunning) {
+                runStartTime = SDL_GetTicks();
+            }
+            isrunning = true;
+            isleft = true;
+            Monkeyrun(currentClip, runStartTime, isleft);
+        }
+    } else if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
+        if (isJump||isFall){
+            monkey.x += monkey.speed;
+            isleft = false;
+        } else {
+            if (!isrunning) {
+                runStartTime = SDL_GetTicks();
+            }
+            isrunning = true;
+            isleft = false;
+            Monkeyrun(currentClip, runStartTime, isleft);
+        }
+    } else {
+        isrunning = false;
+    }
+    if (monkey.x < 0) monkey.x = 0;
+    if (monkey.x > SCREEN_WIDTH - 100) monkey.x = SCREEN_WIDTH - 100;
+
+    if(isJump){
+        MonkeyJump(currentClip, monkey.y, isJump, isleft);
+    }
+
+    if (!isBlinking && currentTime - lastInputTime > 2000) {
+        isBlinking = true;
+        blinkStartTime = SDL_GetTicks();
+    }
+    if (isBlinking) {
+        Monkeyblink(currentClip, blinkStartTime, isBlinking, isleft);
+        lastInputTime=currentTime;
+        }
+}
+
 void renderMonkey(SDL_Renderer* renderer, SDL_Texture* monkeyTexture, SDL_Rect* currentClip) {
         SDL_Rect monkeyRect=monkey.rect();
         SDL_RenderCopy(renderer, monkeyTexture,  currentClip, &monkeyRect);
 }
+
 

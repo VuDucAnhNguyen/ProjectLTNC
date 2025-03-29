@@ -17,7 +17,7 @@ extern bool isJump;
 extern bool isrunning;
 extern bool isFall;
 extern bool isleft;
-extern bool fallthrough;
+extern Uint32 currentTime;
 extern Uint32 blinkStartTime;
 extern Uint32 runStartTime;
 
@@ -25,6 +25,7 @@ void Monkeyblink(SDL_Rect*& currentClip, Uint32& blinkStartTime, bool& isBlinkin
 void Monkeyrun(SDL_Rect*& currentClip, Uint32& runStartTime, bool isleft);
 void MonkeyJump (SDL_Rect*& currentClip, int&y, bool& isJump, bool& isleft);
 void MonkeyFall (SDL_Rect*& currentClip, int &y, bool &isOnPlatform,bool& isJump, bool& isleft);
+void Monkeymain(bool &isBlinking);
 void renderMonkey(SDL_Renderer* renderer,SDL_Texture* monkeyTexture, SDL_Rect* currentClip);
 
 

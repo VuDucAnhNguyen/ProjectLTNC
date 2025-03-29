@@ -19,7 +19,7 @@
 	<SDL_image.h>
 	<iostream>
 
-1743159905 source:d:\code\github\projectltnc\monkeydave\main.cpp
+1743171678 source:d:\code\github\projectltnc\monkeydave\main.cpp
 	<cstdlib>
 	<ctime>
 	"Initclose.h"
@@ -42,17 +42,18 @@
 1743160108 d:\code\github\projectltnc\monkeydave\object.h
 	<SDL.h>
 
-1743160108 d:\code\github\projectltnc\monkeydave\monkeyanimation.h
+1743171678 d:\code\github\projectltnc\monkeydave\monkeyanimation.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	"loadTexture.h"
 	"object.h"
 
-1743160012 source:d:\code\github\projectltnc\monkeydave\monkeyanimation.cpp
+1743171678 source:d:\code\github\projectltnc\monkeydave\monkeyanimation.cpp
 	"MonkeyAnimation.h"
+	"Initclose.h"
 
-1743160025 source:d:\code\github\projectltnc\monkeydave\object.cpp
+1743171700 source:d:\code\github\projectltnc\monkeydave\object.cpp
 	"object.h"
 	"Initclose.h"
 

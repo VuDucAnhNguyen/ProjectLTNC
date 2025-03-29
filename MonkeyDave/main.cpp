@@ -103,15 +103,6 @@ int main( int argc, char* args[] ){
                 Uint32 frameStart = SDL_GetTicks();
                 Uint32 currentTime = SDL_GetTicks();
 
-                if (isleft){
-                    currentClip=&defaultMonkeyLeft;
-                } else {
-                    currentClip=&defaultMonkeyRight;
-                }
-
-                bool isOnPlatform = false;
-                MonkeyFall(currentClip, monkey.y,isOnPlatform, isJump, isleft);
-
 				while( SDL_PollEvent( &e ) != 0 ){
 					if( e.type == SDL_QUIT ){
 						quit = true;
@@ -120,69 +111,14 @@ int main( int argc, char* args[] ){
                         lastInputTime = currentTime;
                         isBlinking = false;
                     }
-                    if (e.key.keysym.sym == SDLK_LEFT) {
-                        isleft = true;
-                    }
-                    if (e.key.keysym.sym == SDLK_RIGHT) {
-                        isleft = false;
-                    }
-                    if (e.key.keysym.sym == SDLK_UP&&isOnPlatform) {
-                        isJump = true;
-                    }
-                    if (e.key.keysym.sym == SDLK_DOWN&&isOnPlatform){
-                        fallthrough = true;
-                    }
 				}
-				if (!isBlinking && currentTime - lastInputTime > 2000) {
-                    isBlinking = true;
-                    blinkStartTime = SDL_GetTicks();
-                }
-                if (isBlinking) {
-                    Monkeyblink(currentClip, blinkStartTime, isBlinking, isleft);
-                    lastInputTime=currentTime;
-                }
-
-                const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-                if (currentKeyStates[SDL_SCANCODE_LEFT]) {
-                    if (isJump||isFall){
-                    monkey.x -= monkey.speed;
-                    isleft = true;
-                    } else {
-                        if (!isrunning) {
-                        runStartTime = SDL_GetTicks();
-                    }
-                    isrunning = true;
-                    isleft = true;
-                    Monkeyrun(currentClip, runStartTime, isleft);
-                    }
-                } else if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
-                    if (isJump||isFall){
-                    monkey.x += monkey.speed;
-                    isleft = false;
-                    } else {
-                        if (!isrunning) {
-                        runStartTime = SDL_GetTicks();
-                    }
-                    isrunning = true;
-                    isleft = false;
-                    Monkeyrun(currentClip, runStartTime, isleft);
-                    }
-                } else {
-                    isrunning = false;
-                }
-                if (monkey.x < 0) monkey.x = 0;
-                if (monkey.x > SCREEN_WIDTH - 100) monkey.x = SCREEN_WIDTH - 100;
-
-                if (isJump) {
-                    MonkeyJump(currentClip, monkey.y, isJump, isleft);
-                }
-
 
 				if (banana.y+banana.height >= SCREEN_HEIGHT||monkey.y+monkey.height>=SCREEN_HEIGHT){
                     collisionWithLine = true;
 				}
 
                 if (!collisionWithLine){
+                    Monkeymain(isBlinking);
                     if (SDL_GetTicks()-startTime>3000){
                         banana.falling();
                     }
@@ -216,11 +152,17 @@ int main( int argc, char* args[] ){
                     SDL_SetTextureColorMod(gbananaTexture, 100, 100, 100);
                     SDL_SetTextureColorMod(gplatformTexture, 100, 100, 100);
                     SDL_SetTextureColorMod(gmonkeystaystandrightTexture, 100, 100, 100);
+                    SDL_SetTextureColorMod(gmonkeystaystandleftTexture, 100, 100, 100);
+                    SDL_SetTextureColorMod(gmonkeyjumpandfallleftTexture, 100, 100, 100);
+                    SDL_SetTextureColorMod(gmonkeyjumpandfallrightTexture, 100, 100, 100);
                 } else {
                     SDL_SetTextureColorMod(gbackgroundjungleTexture, 255, 255, 255);
                     SDL_SetTextureColorMod(gbananaTexture, 255, 255, 255);
                     SDL_SetTextureColorMod(gplatformTexture, 255, 255, 255);
                     SDL_SetTextureColorMod(gmonkeystaystandrightTexture, 255, 255 ,255);
+                    SDL_SetTextureColorMod(gmonkeystaystandleftTexture, 255, 255, 255);
+                    SDL_SetTextureColorMod(gmonkeyjumpandfallleftTexture, 255, 255, 255);
+                    SDL_SetTextureColorMod(gmonkeyjumpandfallrightTexture, 255, 255, 255);
                 }
 
                 SDL_RenderCopy(gRenderer, gbackgroundjungleTexture, NULL, NULL);
