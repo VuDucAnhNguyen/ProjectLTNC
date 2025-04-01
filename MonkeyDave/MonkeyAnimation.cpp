@@ -36,7 +36,7 @@ int jumpvelocity = 16;
 int fallvelocity =4;
 
 bool isStandingOn(SDL_Rect rectA,SDL_Rect rectB) {
-    bool verticalOverlap = (rectA.y + rectA.h >= rectB.y-5)&& (rectA.y + rectA.h <= rectB.y + 3);
+    bool verticalOverlap = (rectA.y + rectA.h >= rectB.y-3)&& (rectA.y + rectA.h <= rectB.y + 5);
     bool horizontalOverlap = (rectA.x + rectA.w > rectB.x) && (rectA.x < rectB.x + rectB.w);
 
     return verticalOverlap && horizontalOverlap;
@@ -68,11 +68,32 @@ void MonkeyJump (SDL_Rect*& currentClip, int &y, bool& isJump, bool& isleft){
     }
 }
 
-void MonkeyFall (SDL_Rect*& currentClip, int &y,bool &isOnPlatform, bool& isJump, bool& isleft){
-    for (int i = 0; i < 7; i++) {
-        if (isStandingOn(monkey.rect(), platform[i].rect())&&!fallthrough) {
-        isOnPlatform = true;
-        break;
+void MonkeyFall (SDL_Rect*& currentClip, int &y,bool &isOnPlatform, bool& isJump, bool& isleft, string mapChoose){
+    if(mapChoose=="darkforest"){
+        for (int i = 0; i < 7; i++) {
+            if (isStandingOn(monkey.rect(), platformDarkForest[i].rect())&&!fallthrough) {
+            isOnPlatform = true;
+            break;
+            }
+        }
+    }
+    if (mapChoose=="edgeforest"){
+        for (int i = 0; i < 5; i++) {
+            if (isStandingOn(monkey.rect(), platformEdgeForest[i].rect())&&!fallthrough) {
+            isOnPlatform = true;
+            break;
+            }
+        }
+    }
+    if (mapChoose=="magicforest"){
+        for (int i = 0; i < 7; i++) {
+            if (isStandingOn(monkey.rect(), platformMagicForest[i].rect())&&!fallthrough) {
+            if(!isrunning){
+            monkey.x+=platformMagicForest[i].speed;
+            }
+            isOnPlatform = true;
+            break;
+            }
         }
     }
     fallthrough=false;
@@ -170,7 +191,7 @@ void Monkeyrun(SDL_Rect*& currentClip, Uint32& runStartTime, bool isleft) {
     }
 }
 
-void Monkeymain (bool& isBlinking){
+void Monkeymain (bool& isBlinking, string mapChoose){
     Uint32 currentTime = SDL_GetTicks();
     if (isleft){
         currentClip=&defaultMonkeyLeft;
@@ -179,7 +200,7 @@ void Monkeymain (bool& isBlinking){
     }
 
     bool isOnPlatform = false;
-    MonkeyFall(currentClip, monkey.y,isOnPlatform, isJump, isleft);
+    MonkeyFall(currentClip, monkey.y,isOnPlatform, isJump, isleft, mapChoose);
 
     const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
     if (currentKeyStates[SDL_SCANCODE_UP]&&isOnPlatform){

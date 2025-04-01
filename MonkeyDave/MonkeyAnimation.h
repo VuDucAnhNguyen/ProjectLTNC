@@ -1,5 +1,5 @@
-#ifndef MONKEY_ANIMATION_H
-#define MONKEY_ANIMATION_H
+#ifndef MONKEY_ANIMATION__H_
+#define MONKEY_ANIMATION__H_
 
 #include <iostream>
 #include <SDL.h>
@@ -24,8 +24,8 @@ extern Uint32 runStartTime;
 void Monkeyblink(SDL_Rect*& currentClip, Uint32& blinkStartTime, bool& isBlinking,bool isleft);
 void Monkeyrun(SDL_Rect*& currentClip, Uint32& runStartTime, bool isleft);
 void MonkeyJump (SDL_Rect*& currentClip, int&y, bool& isJump, bool& isleft);
-void MonkeyFall (SDL_Rect*& currentClip, int &y, bool &isOnPlatform,bool& isJump, bool& isleft);
-void Monkeymain(bool &isBlinking);
+void MonkeyFall (SDL_Rect*& currentClip, int &y, bool &isOnPlatform,bool& isJump, bool& isleft, string mapChoose);
+void Monkeymain(bool &isBlinking, string mapChoose);
 void renderMonkey(SDL_Renderer* renderer,SDL_Texture* monkeyTexture, SDL_Rect* currentClip);
 
 

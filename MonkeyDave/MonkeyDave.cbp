@@ -43,6 +43,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="object.cpp" />
 		<Unit filename="object.h" />
+		<Unit filename="textDisplay.cpp" />
+		<Unit filename="textDisplay.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

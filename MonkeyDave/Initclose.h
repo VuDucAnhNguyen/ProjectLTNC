@@ -17,4 +17,5 @@ bool init();
 
 void close();
 
-#endif // Initclose__H_
+#endif //
+
