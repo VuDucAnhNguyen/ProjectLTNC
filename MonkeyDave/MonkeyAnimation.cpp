@@ -1,27 +1,28 @@
 #include "MonkeyAnimation.h"
 #include "Initclose.h"
+#include "loadAudio.h"
 
 
-SDL_Rect defaultMonkeyRight = { 0, 0, 230, 255 };
-SDL_Rect BlinkEyeRight1 = { 230, 0, 230, 255 };
-SDL_Rect BlinkEyeRight2 = { 460, 0, 400, 255 };
-SDL_Rect BlinkEyeLeft2 = { 0, 0, 230, 255 };
-SDL_Rect BlinkEyeLeft1 = { 230, 0, 230, 255 };
-SDL_Rect defaultMonkeyLeft = { 460, 0, 400, 255 };
-SDL_Rect Runningright1 = { 0, 0, 260, 500};
-SDL_Rect Runningright2 = { 260, 0, 230, 500};
-SDL_Rect Runningright3 = { 490, 0, 205, 500};
-SDL_Rect Runningright4 = { 695, 0, 200, 500};
-SDL_Rect Runningright5 = { 895, 0, 230, 500};
-SDL_Rect Runningleft5 = { 0, 0, 250, 500};
-SDL_Rect Runningleft4 = { 250, 0, 200, 500};
-SDL_Rect Runningleft3 = { 450, 0, 200, 500};
-SDL_Rect Runningleft2 = { 650, 0, 230, 500};
-SDL_Rect Runningleft1 = { 880, 0, 270, 500};
-SDL_Rect Jumpright = { 0, 0, 275, 500};
-SDL_Rect Fallright = {275, 0,270,500};
-SDL_Rect Jumpleft = { 240, 0, 240, 500};
-SDL_Rect Fallleft = {0, 0,235,500};
+SDL_Rect defaultMonkeyRight = {0, 0 , 232, 269 };
+SDL_Rect BlinkEyeRight1 = { 232, 0, 229, 269 };
+SDL_Rect BlinkEyeRight2 = { 461, 0, 230, 269 };
+SDL_Rect BlinkEyeLeft2 = { 0, 0, 229, 269 };
+SDL_Rect BlinkEyeLeft1 = { 229, 0, 231, 269 };
+SDL_Rect defaultMonkeyLeft = { 460, 0, 231, 269 };
+SDL_Rect Runningright1 = { 0, 0, 260, 293};
+SDL_Rect Runningright2 = { 260, 0, 230, 293};
+SDL_Rect Runningright3 = { 490, 0, 205, 293};
+SDL_Rect Runningright4 = { 695, 0, 200, 293};
+SDL_Rect Runningright5 = { 895, 0, 230, 293};
+SDL_Rect Runningleft5 = { 0, 0, 239, 293};
+SDL_Rect Runningleft4 = { 239, 0, 203, 293};
+SDL_Rect Runningleft3 = { 442, 0, 186, 293};
+SDL_Rect Runningleft2 = { 628, 0, 227, 293};
+SDL_Rect Runningleft1 = { 855, 0, 273, 293};
+SDL_Rect Jumpright = { 0, 0, 283, 269};
+SDL_Rect Fallright = {283, 0,233,269};
+SDL_Rect Jumpleft = { 240 , 0, 240, 269};
+SDL_Rect Fallleft = {0, 0,235,269};
 SDL_Rect* currentClip = &defaultMonkeyRight;
 Uint32 lastInputTime = SDL_GetTicks();
 bool isBlinking=false;
@@ -33,10 +34,12 @@ bool fallthrough=false;
 Uint32 blinkStartTime = 0;
 Uint32 runStartTime=0;
 int jumpvelocity = 16;
-int fallvelocity =4;
+int defaultfallvelocity =4;
+int fallvelocity =defaultfallvelocity;
+
 
 bool isStandingOn(SDL_Rect rectA,SDL_Rect rectB) {
-    bool verticalOverlap = (rectA.y + rectA.h >= rectB.y-3)&& (rectA.y + rectA.h <= rectB.y + 5);
+    bool verticalOverlap = (rectA.y + rectA.h >= rectB.y)&& (rectA.y + rectA.h <= rectB.y + 8);
     bool horizontalOverlap = (rectA.x + rectA.w > rectB.x) && (rectA.x < rectB.x + rectB.w);
 
     return verticalOverlap && horizontalOverlap;
@@ -107,7 +110,7 @@ void MonkeyFall (SDL_Rect*& currentClip, int &y,bool &isOnPlatform, bool& isJump
             }
             monkey.y += fallvelocity;
         } else {
-            fallvelocity =4;
+            fallvelocity =defaultfallvelocity;
             isFall=false;
         }
     } else {
@@ -117,10 +120,11 @@ void MonkeyFall (SDL_Rect*& currentClip, int &y,bool &isOnPlatform, bool& isJump
             fallvelocity += 1;
             if (fallvelocity > 8){
                 fallvelocity = 8;
+
             }
             monkey.y += fallvelocity;
         } else {
-            fallvelocity =4;
+            fallvelocity =defaultfallvelocity;
             isFall=false;
         }
     }
@@ -205,15 +209,24 @@ void Monkeymain (bool& isBlinking, string mapChoose){
     const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
     if (currentKeyStates[SDL_SCANCODE_UP]&&isOnPlatform){
         isJump=true;
+        Mix_HaltChannel(1);
+        Mix_PlayChannel(1, jumpSound, 0);
     } else if (currentKeyStates[SDL_SCANCODE_DOWN] && isOnPlatform){
         fallthrough=true;
     } else if (currentKeyStates[SDL_SCANCODE_LEFT]) {
         if (isJump||isFall){
             monkey.x -= monkey.speed;
+            isrunning=false;
             isleft = true;
         } else {
             if (!isrunning) {
                 runStartTime = SDL_GetTicks();
+                Mix_HaltChannel(1);
+                if (mapChoose=="edgeforest"){
+                    Mix_PlayChannel(2, runwoodSound, -1);
+                } else {
+                    Mix_PlayChannel(2, rungrassSound, -1);
+                }
             }
             isrunning = true;
             isleft = true;
@@ -222,10 +235,17 @@ void Monkeymain (bool& isBlinking, string mapChoose){
     } else if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
         if (isJump||isFall){
             monkey.x += monkey.speed;
+            isrunning=false;
             isleft = false;
         } else {
             if (!isrunning) {
                 runStartTime = SDL_GetTicks();
+                Mix_HaltChannel(1);
+                if (mapChoose=="edgeforest"){
+                    Mix_PlayChannel(2, runwoodSound, -1);
+                } else {
+                    Mix_PlayChannel(2, rungrassSound, -1);
+                }
             }
             isrunning = true;
             isleft = false;
@@ -233,6 +253,7 @@ void Monkeymain (bool& isBlinking, string mapChoose){
         }
     } else {
         isrunning = false;
+        Mix_HaltChannel(2);
     }
     if (monkey.x < 0) monkey.x = 0;
     if (monkey.x > SCREEN_WIDTH - 100) monkey.x = SCREEN_WIDTH - 100;

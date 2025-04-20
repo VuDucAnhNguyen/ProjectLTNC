@@ -36,6 +36,8 @@
 		<Unit filename="Initclose.h" />
 		<Unit filename="MonkeyAnimation.cpp" />
 		<Unit filename="MonkeyAnimation.h" />
+		<Unit filename="loadAudio.cpp" />
+		<Unit filename="loadAudio.h" />
 		<Unit filename="loadFont.cpp" />
 		<Unit filename="loadFont.h" />
 		<Unit filename="loadTexture.cpp" />

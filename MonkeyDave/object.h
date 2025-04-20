@@ -33,8 +33,16 @@ extern object platformDarkForest[7];
 extern object platformMagicForest[7];
 
 extern object buttonback;
-extern object banner[2];
-extern object button[6];
+extern object musicbar;
+extern object musicthumb;
+extern object soundbar;
+extern object soundthumb;
+extern object musicicon;
+extern object speakericon;
+
+extern object banner[5];
+extern object button[9];
+extern object buttonreset[3];
 
 
 #endif

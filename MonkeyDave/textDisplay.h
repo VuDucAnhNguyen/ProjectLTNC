@@ -7,7 +7,7 @@
 
 using namespace std;
 
-extern int score;
+
 
 struct textDisplay{
     string display;
@@ -23,9 +23,15 @@ struct textDisplay{
 extern textDisplay textScore;
 extern textDisplay textGameOver;
 extern textDisplay textScoreEnd;
-extern textDisplay textSystem[7];
+extern textDisplay textSystem[9];
 extern textDisplay textChooseMap;
+extern textDisplay textHighscores;
+extern textDisplay textSetting;
+extern textDisplay textGamePause;
+extern textDisplay textCountDown;
+extern textDisplay textEdgeforest;
+extern textDisplay textDarkforest;
+extern textDisplay textMagicforest;
 
 
 #endif
-

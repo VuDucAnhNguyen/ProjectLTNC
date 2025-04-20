@@ -5,6 +5,7 @@
 extern TTF_Font* Boldonsefont14;
 extern TTF_Font* HanaleiFillfont64;
 extern TTF_Font* Boldonsefont24;
+extern TTF_Font* HanaleiFillfont72;
 
 bool loadFonts();
 

@@ -14,9 +14,9 @@ SDL_Texture* gplatformedgeforestTexture = NULL;
 SDL_Texture* gplatformdarkforestTexture = NULL;
 SDL_Texture* gplatformmagicforestTexture = NULL;
 
-SDL_Texture* gbananaTexture=NULL;
 SDL_Texture* g10ptsTexture=NULL;
 SDL_Texture* gbannerTexture=NULL;
+SDL_Texture* gbananaTexture=NULL;
 SDL_Texture* gbeehiveTexture=NULL;
 SDL_Texture* gwarningTexture=NULL;
 
@@ -29,6 +29,10 @@ SDL_Texture* gmonkeyjumpandfallleftTexture=NULL;
 
 SDL_Texture* gbuttonTexture=NULL;
 SDL_Texture* gbuttonbackTexture=NULL;
+SDL_Texture* gbarTexture=NULL;
+SDL_Texture* gthumbTexture=NULL;
+SDL_Texture* gmusiciconTexture=NULL;
+SDL_Texture* gspeakericonTexture=NULL;
 
 
 
@@ -38,11 +42,11 @@ SDL_Texture* loadTexture(const string &path, SDL_Renderer* renderer ){
 
 	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
 	if( loadedSurface == NULL ){
-		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+		cout << "Unable to load image "<<path.c_str()<<" SDL_image Error: " <<IMG_GetError();
 	} else{
         newTexture = SDL_CreateTextureFromSurface( renderer, loadedSurface );
 		if( newTexture == NULL ){
-			printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+			cout << "Unable to create texture from "<<path.c_str()<< "SDL Error: "<< SDL_GetError() ;
 		}
 
 		SDL_FreeSurface( loadedSurface );
@@ -50,6 +54,7 @@ SDL_Texture* loadTexture(const string &path, SDL_Renderer* renderer ){
 
 	return newTexture;
 }
+
 
 bool loadTextures(SDL_Renderer* renderer) {
     bool success = true;
@@ -130,12 +135,23 @@ bool loadTextures(SDL_Renderer* renderer) {
 
 
 
-
     gbuttonTexture = loadTexture("image_project/button.png", renderer);
     if (gbuttonTexture == NULL) success = false;
 
     gbuttonbackTexture = loadTexture("image_project/button.png", renderer);
     if (gbuttonbackTexture == NULL) success = false;
+
+    gbarTexture = loadTexture("image_project/bar.png", renderer);
+    if (gbarTexture == NULL) success = false;
+
+    gthumbTexture = loadTexture("image_project/thumb.png", renderer);
+    if (gthumbTexture == NULL) success = false;
+
+    gmusiciconTexture = loadTexture("image_project/music_icon.png", renderer);
+    if (gmusiciconTexture == NULL) success = false;
+
+    gspeakericonTexture = loadTexture("image_project/speaker_icon.png", renderer);
+    if (gspeakericonTexture == NULL) success = false;
 
     return success;
 }
@@ -170,7 +186,10 @@ void destroyTextures() {
 
     SDL_DestroyTexture(gbuttonTexture);
     SDL_DestroyTexture(gbuttonbackTexture);
-
+    SDL_DestroyTexture(gbarTexture);
+    SDL_DestroyTexture(gthumbTexture);
+    SDL_DestroyTexture(gmusiciconTexture);
+    SDL_DestroyTexture(gspeakericonTexture);
 
 
 
@@ -203,5 +222,9 @@ void destroyTextures() {
 
     gbuttonTexture = NULL;
     gbuttonbackTexture=NULL;
+    gbarTexture=NULL;
+    gthumbTexture=NULL;
+    gmusiciconTexture=NULL;
+    gspeakericonTexture=NULL;
 }
 

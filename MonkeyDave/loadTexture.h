@@ -35,11 +35,18 @@ extern SDL_Texture* gmonkeyjumpandfallleftTexture;
 
 extern SDL_Texture* gbuttonTexture;
 extern SDL_Texture* gbuttonbackTexture;
+extern SDL_Texture* gbarTexture;
+extern SDL_Texture* gthumbTexture;
+extern SDL_Texture* gmusiciconTexture;
+extern SDL_Texture* gspeakericonTexture;
+
+
 
 
 bool loadTextures(SDL_Renderer* renderer);
 void destroyTextures();
 SDL_Texture* loadTexture(const string& path, SDL_Renderer* renderer);
+
 
 #endif // loadTexture__H_
 

@@ -1,69 +1,81 @@
 # depslib dependency file v1.0
-1743512513 source:d:\code\github\projectltnc\monkeydave\initclose.cpp
+1743570436 source:d:\code\github\projectltnc\monkeydave\initclose.cpp
 	"Initclose.h"
 	"loadFont.h"
 	"loadTexture.h"
 
-1743512594 d:\code\github\projectltnc\monkeydave\initclose.h
+1743570613 d:\code\github\projectltnc\monkeydave\initclose.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
+	<SDL_mixer.h>
 	<string>
 	<iostream>
 
-1743512513 source:d:\code\github\projectltnc\monkeydave\loadtexture.cpp
+1745118107 source:d:\code\github\projectltnc\monkeydave\loadtexture.cpp
 	"loadTexture.h"
 
-1743512594 d:\code\github\projectltnc\monkeydave\loadtexture.h
+1745118107 d:\code\github\projectltnc\monkeydave\loadtexture.h
 	<SDL.h>
 	<SDL_image.h>
 	<iostream>
 
-1743512513 source:d:\code\github\projectltnc\monkeydave\main.cpp
+1745118107 source:d:\code\github\projectltnc\monkeydave\main.cpp
 	<cstdlib>
 	<ctime>
 	"Initclose.h"
 	"loadFont.h"
 	"loadTexture.h"
+	"loadAudio.h"
 	"object.h"
 	"MonkeyAnimation.h"
 	"textDIsplay.h"
+	<fstream>
+	<map>
 
 1742894873 source:d:\code\github\projectltnc\monkeydave\loadfont..cpp
 	"loadFont.h"
 	<iostream>
 
-1743512594 d:\code\github\projectltnc\monkeydave\loadfont.h
+1745118107 d:\code\github\projectltnc\monkeydave\loadfont.h
 	<SDL_ttf.h>
 
-1743512513 source:d:\code\github\projectltnc\monkeydave\loadfont.cpp
+1745118107 source:d:\code\github\projectltnc\monkeydave\loadfont.cpp
 	"loadFont.h"
 	<iostream>
 
-1743512594 d:\code\github\projectltnc\monkeydave\object.h
+1745118107 d:\code\github\projectltnc\monkeydave\object.h
 	<SDL.h>
 
-1743512594 d:\code\github\projectltnc\monkeydave\monkeyanimation.h
+1745118107 d:\code\github\projectltnc\monkeydave\monkeyanimation.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	"loadTexture.h"
 	"object.h"
 
-1743512513 source:d:\code\github\projectltnc\monkeydave\monkeyanimation.cpp
+1745118513 source:d:\code\github\projectltnc\monkeydave\monkeyanimation.cpp
 	"MonkeyAnimation.h"
 	"Initclose.h"
+	"loadAudio.h"
 
-1743513233 source:d:\code\github\projectltnc\monkeydave\object.cpp
+1745118107 source:d:\code\github\projectltnc\monkeydave\object.cpp
 	"object.h"
 	"Initclose.h"
 
-1743512513 source:d:\code\github\projectltnc\monkeydave\textdisplay.cpp
+1745118107 source:d:\code\github\projectltnc\monkeydave\textdisplay.cpp
 	"textDIsplay.h"
 	"Initclose.h"
 
-1743512513 d:\code\github\projectltnc\monkeydave\textdisplay.h
+1745118107 d:\code\github\projectltnc\monkeydave\textdisplay.h
 	<SDL.h>
 	<iostream>
 	<SDL_ttf.h>
+
+1745118238 source:d:\code\github\projectltnc\monkeydave\loadaudio.cpp
+	"loadAudio.h"
+	<iostream>
+
+1745118238 d:\code\github\projectltnc\monkeydave\loadaudio.h
+	<SDL_mixer.h>
 

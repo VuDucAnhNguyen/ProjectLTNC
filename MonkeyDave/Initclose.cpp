@@ -42,6 +42,10 @@ bool init() {
                     cout << "SDL_ttf could not initialize! TTF Error: " << TTF_GetError() << endl;
                     success = false;
                 }
+
+                if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1) {
+                    cout << "SDL_mixer could not initialize! TTF Error: "<< Mix_GetError() << endl;
+                }
             }
         }
     }

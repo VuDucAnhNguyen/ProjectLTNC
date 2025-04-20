@@ -32,9 +32,9 @@ void object::falling() {
 }
 
 
-object banana(rand() % (SCREEN_WIDTH * 62 / 64 - 50) + (SCREEN_WIDTH / 64), -50, 50, 44, 2);
+object banana(rand() % (SCREEN_WIDTH * 62 / 64 - 50) + (SCREEN_WIDTH / 64), -50, 50, 44, 3);
 object img10pts(-100, -100, 40, 40, 0);
-object monkey((SCREEN_WIDTH - 100) / 2, SCREEN_HEIGHT - 335, 100, 100, 5);
+object monkey((SCREEN_WIDTH - 100) / 2, SCREEN_HEIGHT - 335, 100, 100, 6);
 object beehive[2]={
     object (rand() % (SCREEN_WIDTH * 62 / 64 - 70) + (SCREEN_WIDTH / 64), -70, 70, 70, 7),
     object (rand() % (SCREEN_WIDTH * 62 / 64 - 70) + (SCREEN_WIDTH / 64), -70, 70, 70, 7),
@@ -48,9 +48,12 @@ object previewEdgeForest ((SCREEN_WIDTH-232)/2-252 ,300 , 232, 174, 0);
 object previewDarkForest((SCREEN_WIDTH-232)/2, 300, 232, 174, 0);
 object previewMagicForest((SCREEN_WIDTH-232)/2 +252 ,300 , 232, 174, 0);
 
-object banner[2]={
+object banner[5]={
     object (SCREEN_WIDTH / 6, SCREEN_HEIGHT + 10, SCREEN_WIDTH * 2/3, SCREEN_HEIGHT/2, 10), //gameover
-    object (SCREEN_WIDTH / 48, SCREEN_HEIGHT + 10, SCREEN_WIDTH * 23/24, SCREEN_HEIGHT*11/15, 15)  //choosemap
+    object (SCREEN_WIDTH / 48, SCREEN_HEIGHT + 10, SCREEN_WIDTH * 23/24, SCREEN_HEIGHT*11/15, 15),  //choosemap
+    object (SCREEN_WIDTH / 6, SCREEN_HEIGHT + 10, SCREEN_WIDTH * 2/3, SCREEN_HEIGHT*29/50, 15), //highscore
+    object (SCREEN_WIDTH / 6, SCREEN_HEIGHT + 10, SCREEN_WIDTH * 2/3, SCREEN_HEIGHT/2, 15),  //setting
+    object (SCREEN_WIDTH /4, SCREEN_HEIGHT + 10, SCREEN_WIDTH /2, SCREEN_HEIGHT*3/4, 15) //gamepause
 };
 
 object platformEdgeForest[5] = {
@@ -81,12 +84,29 @@ object platformMagicForest[7] = {
     object(SCREEN_WIDTH-330, SCREEN_HEIGHT-125, 150, 40, -2)
 };
 
-object button[6] = {
-    object(SCREEN_WIDTH/2-170-10,SCREEN_HEIGHT-290, 170, 53, 0), //retry
-    object(SCREEN_WIDTH/2+10,SCREEN_HEIGHT-290,170,53,0), //main menu
+object button[9] = {
+    object(SCREEN_WIDTH/2-170-10,SCREEN_HEIGHT-290, 170, 53, 0), //retry when lose
+    object(SCREEN_WIDTH/2+10,SCREEN_HEIGHT-290,170,53,0), //main menu when lose
     object((SCREEN_WIDTH-200)/2,SCREEN_HEIGHT-350,200,62,0), //play
     object((SCREEN_WIDTH-200)/2,SCREEN_HEIGHT-280,200,62,0),//highscore
-    object((SCREEN_WIDTH-200)/2,SCREEN_HEIGHT-210,200,62,0), //setting
     object((SCREEN_WIDTH-200)/2,SCREEN_HEIGHT-140,200,62,0),  //exit
+    object((SCREEN_WIDTH-200)/2,SCREEN_HEIGHT-210,200,62,0), //setting
+    object((SCREEN_WIDTH-200)/2,SCREEN_HEIGHT-420,200,62,0), //resume
+    object((SCREEN_WIDTH-200)/2,SCREEN_HEIGHT-350,200,62,0), //retry
+    object((SCREEN_WIDTH-200)/2,SCREEN_HEIGHT-280,200,62,0)  //main menu
 };
-object buttonback((SCREEN_WIDTH-200)/2,SCREEN_HEIGHT-220,200,62,0);
+
+object buttonback((SCREEN_WIDTH-200)/2,0,200,62,0);
+
+object buttonreset[3] = {
+    object(580,250,150,46,0), //edgeforest
+    object(580,300,150,46,0), //darkforest
+    object(580,350,150,46,0), //magicforest
+};
+
+object musicbar(SCREEN_WIDTH/2-95,300,250, 40, 0);
+object musicthumb(SCREEN_WIDTH/2+10, 300, 40,40, 0);
+object soundbar(SCREEN_WIDTH/2-95,250,250, 40, 0);
+object soundthumb(SCREEN_WIDTH/2+10, 250, 40,40, 0);
+object musicicon (SCREEN_WIDTH/2-155,300, 40, 40, 0);
+object speakericon(SCREEN_WIDTH/2-155,250, 40, 40, 0);

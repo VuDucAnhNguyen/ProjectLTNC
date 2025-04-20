@@ -20,6 +20,7 @@ extern bool isleft;
 extern Uint32 currentTime;
 extern Uint32 blinkStartTime;
 extern Uint32 runStartTime;
+extern int defaultfallvelocity;
 
 void Monkeyblink(SDL_Rect*& currentClip, Uint32& blinkStartTime, bool& isBlinking,bool isleft);
 void Monkeyrun(SDL_Rect*& currentClip, Uint32& runStartTime, bool isleft);
