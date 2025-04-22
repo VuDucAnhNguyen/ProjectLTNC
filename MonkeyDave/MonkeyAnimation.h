@@ -27,7 +27,7 @@ void Monkeyrun(SDL_Rect*& currentClip, Uint32& runStartTime, bool isleft);
 void MonkeyJump (SDL_Rect*& currentClip, int&y, bool& isJump, bool& isleft);
 void MonkeyFall (SDL_Rect*& currentClip, int &y, bool &isOnPlatform,bool& isJump, bool& isleft, string mapChoose);
 void Monkeymain(bool &isBlinking, string mapChoose);
-void renderMonkey(SDL_Renderer* renderer,SDL_Texture* monkeyTexture, SDL_Rect* currentClip);
+
 
 
 #endif

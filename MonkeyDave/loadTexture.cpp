@@ -36,6 +36,7 @@ SDL_Texture* gspeakericonTexture=NULL;
 
 
 
+
 SDL_Texture* loadTexture(const string &path, SDL_Renderer* renderer ){
 
 	SDL_Texture* newTexture = NULL;
@@ -193,6 +194,7 @@ void destroyTextures() {
 
 
 
+
     gbackgroundstartTexture = NULL;
 
     gbackgroundedgeforestTexture = NULL;
@@ -226,5 +228,6 @@ void destroyTextures() {
     gthumbTexture=NULL;
     gmusiciconTexture=NULL;
     gspeakericonTexture=NULL;
+
 }
 

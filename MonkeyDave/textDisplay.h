@@ -29,6 +29,7 @@ extern textDisplay textHighscores;
 extern textDisplay textSetting;
 extern textDisplay textGamePause;
 extern textDisplay textCountDown;
+extern textDisplay textNewHighScore;
 extern textDisplay textEdgeforest;
 extern textDisplay textDarkforest;
 extern textDisplay textMagicforest;

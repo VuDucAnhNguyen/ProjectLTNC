@@ -13,6 +13,11 @@ SDL_Rect object::rect() {
     return SDL_Rect{x, y, width, height};
 }
 
+void object::renderobject(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* crop){
+    SDL_Rect objectRect=SDL_Rect{x, y, width, height};
+    SDL_RenderCopy(renderer,texture,  crop, &objectRect);
+}
+
 bool object::clicked(int mouseX, int mouseY) {
         return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
 }
@@ -110,3 +115,4 @@ object soundbar(SCREEN_WIDTH/2-95,250,250, 40, 0);
 object soundthumb(SCREEN_WIDTH/2+10, 250, 40,40, 0);
 object musicicon (SCREEN_WIDTH/2-155,300, 40, 40, 0);
 object speakericon(SCREEN_WIDTH/2-155,250, 40, 40, 0);
+

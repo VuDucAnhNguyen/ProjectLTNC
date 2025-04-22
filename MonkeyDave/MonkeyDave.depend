@@ -12,17 +12,19 @@
 	<string>
 	<iostream>
 
-1745118107 source:d:\code\github\projectltnc\monkeydave\loadtexture.cpp
+1745220872 source:d:\code\github\projectltnc\monkeydave\loadtexture.cpp
 	"loadTexture.h"
 
-1745118107 d:\code\github\projectltnc\monkeydave\loadtexture.h
+1745220872 d:\code\github\projectltnc\monkeydave\loadtexture.h
 	<SDL.h>
 	<SDL_image.h>
 	<iostream>
 
-1745118107 source:d:\code\github\projectltnc\monkeydave\main.cpp
+1745313890 source:d:\code\github\projectltnc\monkeydave\main.cpp
 	<cstdlib>
 	<ctime>
+	<fstream>
+	<map>
 	"Initclose.h"
 	"loadFont.h"
 	"loadTexture.h"
@@ -30,8 +32,7 @@
 	"object.h"
 	"MonkeyAnimation.h"
 	"textDIsplay.h"
-	<fstream>
-	<map>
+	"mainmenu.h"
 
 1742894873 source:d:\code\github\projectltnc\monkeydave\loadfont..cpp
 	"loadFont.h"
@@ -44,30 +45,30 @@
 	"loadFont.h"
 	<iostream>
 
-1745118107 d:\code\github\projectltnc\monkeydave\object.h
+1745307823 d:\code\github\projectltnc\monkeydave\object.h
 	<SDL.h>
 
-1745118107 d:\code\github\projectltnc\monkeydave\monkeyanimation.h
+1745309156 d:\code\github\projectltnc\monkeydave\monkeyanimation.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	"loadTexture.h"
 	"object.h"
 
-1745118513 source:d:\code\github\projectltnc\monkeydave\monkeyanimation.cpp
+1745314470 source:d:\code\github\projectltnc\monkeydave\monkeyanimation.cpp
 	"MonkeyAnimation.h"
 	"Initclose.h"
 	"loadAudio.h"
 
-1745118107 source:d:\code\github\projectltnc\monkeydave\object.cpp
+1745307823 source:d:\code\github\projectltnc\monkeydave\object.cpp
 	"object.h"
 	"Initclose.h"
 
-1745118107 source:d:\code\github\projectltnc\monkeydave\textdisplay.cpp
+1745221276 source:d:\code\github\projectltnc\monkeydave\textdisplay.cpp
 	"textDIsplay.h"
 	"Initclose.h"
 
-1745118107 d:\code\github\projectltnc\monkeydave\textdisplay.h
+1745221152 d:\code\github\projectltnc\monkeydave\textdisplay.h
 	<SDL.h>
 	<iostream>
 	<SDL_ttf.h>
@@ -78,4 +79,17 @@
 
 1745118238 d:\code\github\projectltnc\monkeydave\loadaudio.h
 	<SDL_mixer.h>
+
+1745310903 source:d:\code\github\projectltnc\monkeydave\mainmenu.cpp
+	"mainmenu.h"
+
+1745311357 d:\code\github\projectltnc\monkeydave\mainmenu.h
+	<map>
+	"Initclose.h"
+	"loadFont.h"
+	"loadTexture.h"
+	"loadAudio.h"
+	"object.h"
+	"textDIsplay.h"
+	"mainmenu.h"
 

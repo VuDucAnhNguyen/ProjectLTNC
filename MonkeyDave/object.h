@@ -12,6 +12,8 @@ struct object {
 
     SDL_Rect rect();
 
+    void renderobject(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* crop);
+
     void moving(int x1, int x2);
 
     void falling();
@@ -39,6 +41,7 @@ extern object soundbar;
 extern object soundthumb;
 extern object musicicon;
 extern object speakericon;
+
 
 extern object banner[5];
 extern object button[9];

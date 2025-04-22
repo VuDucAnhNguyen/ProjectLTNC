@@ -39,7 +39,7 @@ int fallvelocity =defaultfallvelocity;
 
 
 bool isStandingOn(SDL_Rect rectA,SDL_Rect rectB) {
-    bool verticalOverlap = (rectA.y + rectA.h >= rectB.y)&& (rectA.y + rectA.h <= rectB.y + 8);
+    bool verticalOverlap = (rectA.y + rectA.h >= rectB.y+2)&& (rectA.y + rectA.h <= rectB.y + 10);
     bool horizontalOverlap = (rectA.x + rectA.w > rectB.x) && (rectA.x < rectB.x + rectB.w);
 
     return verticalOverlap && horizontalOverlap;
@@ -210,6 +210,7 @@ void Monkeymain (bool& isBlinking, string mapChoose){
     if (currentKeyStates[SDL_SCANCODE_UP]&&isOnPlatform){
         isJump=true;
         Mix_HaltChannel(1);
+        Mix_HaltChannel(2);
         Mix_PlayChannel(1, jumpSound, 0);
     } else if (currentKeyStates[SDL_SCANCODE_DOWN] && isOnPlatform){
         fallthrough=true;
@@ -218,6 +219,7 @@ void Monkeymain (bool& isBlinking, string mapChoose){
             monkey.x -= monkey.speed;
             isrunning=false;
             isleft = true;
+            Mix_HaltChannel(2);
         } else {
             if (!isrunning) {
                 runStartTime = SDL_GetTicks();
@@ -272,9 +274,5 @@ void Monkeymain (bool& isBlinking, string mapChoose){
         }
 }
 
-void renderMonkey(SDL_Renderer* renderer, SDL_Texture* monkeyTexture, SDL_Rect* currentClip) {
-        SDL_Rect monkeyRect=monkey.rect();
-        SDL_RenderCopy(renderer, monkeyTexture,  currentClip, &monkeyRect);
-}
 
 

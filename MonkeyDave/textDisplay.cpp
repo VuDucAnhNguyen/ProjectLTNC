@@ -44,7 +44,7 @@ textDisplay textSystem[9]={
     textDisplay ("RETRY", 0, 0, 0),
     textDisplay ("MAIN MENU",0,0,0),
     textDisplay ("PLAY",0, 0, 0),
-    textDisplay ("HIGH SCORES",0,0,0),
+    textDisplay ("HIGHSCORES",0,0,0),
     textDisplay ("EXIT",0,0,0),
     textDisplay ("SETTING",0,0,0),
     textDisplay ("BACK",0,0,0),
@@ -54,11 +54,12 @@ textDisplay textSystem[9]={
 
 textDisplay textScore(" ", 0, 10, 0);
 textDisplay textGamePause("GAME PAUSED", 0, SCREEN_HEIGHT+50,15);
-textDisplay textGameOver("GAME OVER!", 0, SCREEN_HEIGHT+50, 10);
-textDisplay textScoreEnd("Score: 0", 0, SCREEN_HEIGHT+150, 0);
+textDisplay textGameOver("GAME OVER!", 0, SCREEN_HEIGHT+40, 10);
+textDisplay textScoreEnd("Score: 0", 0, SCREEN_HEIGHT-410, 0);
 textDisplay textChooseMap("CHOOSE MAP", 0, SCREEN_HEIGHT+50, 15);
 textDisplay textHighscores("HIGHSCORES", 0, SCREEN_HEIGHT+50, 15);
 textDisplay textSetting("SETTING",0, SCREEN_HEIGHT+40,15);
+textDisplay textNewHighScore("NEW HIGH SCORE!",0,SCREEN_HEIGHT-370,0);
 textDisplay textCountDown(" ", 0, 300, 0);
 textDisplay textEdgeforest(" ",240, 260, 0);
 textDisplay textDarkforest(" ",240, 310, 0);
