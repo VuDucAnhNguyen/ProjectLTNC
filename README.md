@@ -13,30 +13,30 @@
   - Setting: Open setting menu to adjust volume of music and sound effects.
   - Exit: Exit game.
 - GAME:  
-  - Control monkey press:
+  - Control the monkey using the keyboard:
     + ← to move left.
     + → to move right.
     + ↑ to jump up.
     + ↓ to jump down.
   - Press ESC to pause game:
-    + press Resume to continue playing.
-    + press Retry for new game.
-    + press Main menu to head back start menu.
-    + press Setting to open setting menu to adjust volume of music and sound effects without restarting the gamee.
+    + Resume to continue playing.
+    + Retry for new game.
+    + Main menu to head back start menu.
+    + Setting to open setting menu to adjust volume of music and sound effects without restarting the game.
   - Jump onto platforms to avoid falling off the screen.
   - Avoid obstacles like beehives or other dangerous objects.
   - Game Over: When the monkey falls off the screen or touches an obstacle.
 ### III. PROJECT STRUCTURE:
-- main.cpp: runs the main game loop.
-- Initclose.cpp: init SDL, SDL_image, SDL_ttf,... library.
-- loadTexture.cpp: load textures from: [MonkeyDave/image_project](https://github.com/VuDucAnhNguyen/ProjectLTNC/tree/main/MonkeyDave/image_project).
-- loadFont.cpp: load fonts from: [MonkeyDave/font_project](https://github.com/VuDucAnhNguyen/ProjectLTNC/tree/main/MonkeyDave/font_project).
-- loadAudio.cpp: load sound effects and music from: [MonkeyDave/audio_project](https://github.com/VuDucAnhNguyen/ProjectLTNC/tree/main/MonkeyDave/audio_project).
-- object.cpp: manage size, speed, color of objects and interact between them.
-- textDisplay.cpp: manage size, content, speed, color of texts.
-- MonkeyAnimation.cpp: handles monkey movement, animation, and sound.
-- mainmenu.cpp: manage UI start menu.
-- highscorefile.cpp: load and save highscores from: [MonkeyDave/high_scores.txt](https://github.com/VuDucAnhNguyen/ProjectLTNC/blob/main/MonkeyDave/high_scores.txt).
+- main.cpp: Runs the main game loop.
+- Initclose.cpp: Initializes SDL, SDL_image, SDL_ttf, and other libraries.
+- loadTexture.cpp: Loads textures from: [MonkeyDave/image_project](https://github.com/VuDucAnhNguyen/ProjectLTNC/tree/main/MonkeyDave/image_project).
+- loadFont.cpp: Loads fonts from: [MonkeyDave/font_project](https://github.com/VuDucAnhNguyen/ProjectLTNC/tree/main/MonkeyDave/font_project).
+- loadAudio.cpp: Loads sound effects and music from: [MonkeyDave/audio_project](https://github.com/VuDucAnhNguyen/ProjectLTNC/tree/main/MonkeyDave/audio_project).
+- object.cpp: Manages size, speed, color of objects and interactions between them.
+- textDisplay.cpp: Manages size, content, speed, color of texts.
+- MonkeyAnimation.cpp: Handles monkey movement, animation, and sound.
+- mainmenu.cpp: Manages UI start menu.
+- highscorefile.cpp: Loads and saves highscores from: [MonkeyDave/high_scores.txt](https://github.com/VuDucAnhNguyen/ProjectLTNC/blob/main/MonkeyDave/high_scores.txt).
 ### IV. TECHNOLOGIES USED:
 - C++
 - SDL2
