@@ -36,7 +36,7 @@
 - textDisplay.cpp: manage size, content, speed, color of texts.
 - MonkeyAnimation.cpp: handles monkey movement, animation, and sound.
 - mainmenu.cpp: manage UI start menu.
-- highscorefile.cpp: load and save highscores from: [MonkeyDave/audio_project](https://github.com/VuDucAnhNguyen/ProjectLTNC/blob/main/MonkeyDave/high_scores.txt).
+- highscorefile.cpp: load and save highscores from: [MonkeyDave/high_scores.txt](https://github.com/VuDucAnhNguyen/ProjectLTNC/blob/main/MonkeyDave/high_scores.txt).
 ### IV. TECHNOLOGIES USED:
 - C++
 - SDL2
