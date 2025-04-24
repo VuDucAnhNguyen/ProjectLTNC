@@ -1,7 +1,7 @@
 #ifndef OBJECTS__H_
 #define OBJECTS__H_
 
-#include <SDL.h>
+#include "Initclose.h"
 
 struct object {
     int x, y, width, height, speed;
@@ -10,9 +10,11 @@ struct object {
 
     bool clicked(int mouseX, int mouseY);
 
-    SDL_Rect rect();
-
     void renderobject(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* crop);
+
+    bool checkCollision(object);
+
+    bool isStandingOn(object);
 
     void moving(int x1, int x2);
 

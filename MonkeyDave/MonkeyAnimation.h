@@ -1,11 +1,9 @@
 #ifndef MONKEY_ANIMATION__H_
 #define MONKEY_ANIMATION__H_
 
+#include "Initclose.h"
 #include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
-#include "loadTexture.h"
-#include "object.h"
+using namespace std;
 
 extern SDL_Rect defaultMonkeyRight;
 extern SDL_Rect defaultMonkeyLeft;

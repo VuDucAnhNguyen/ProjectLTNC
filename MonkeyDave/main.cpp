@@ -1,29 +1,28 @@
 #include <cstdlib>
 #include <ctime>
-#include <fstream>
-#include <map>
 #include "Initclose.h"
 #include "loadFont.h"
 #include "loadTexture.h"
 #include "loadAudio.h"
 #include "object.h"
-#include "MonkeyAnimation.h"
 #include "textDIsplay.h"
+#include "MonkeyAnimation.h"
 #include "mainmenu.h"
+#include "highscorefile.h"
 
 
-Uint32 startTime = SDL_GetTicks();
-Uint32 beehiveTime = SDL_GetTicks();
+
 const int FRAME_RATE = 60;
 const int FRAME_DELAY = 1000 / FRAME_RATE;
-Uint32 img10collision = 0;
+Uint32 startTime = SDL_GetTicks();
+Uint32 beehiveTime = SDL_GetTicks();
+Uint32 img10collision = SDL_GetTicks();
 Uint32 resumetime= SDL_GetTicks();
 Uint32 gamePausestart = SDL_GetTicks();
 
 
 
 bool playinggame = false;
-
 bool gamePause = false;
 bool bannerGameOver = false;
 bool loseCondition = false;
@@ -36,14 +35,6 @@ bool bannergamepause = false;
 bool resumegame = false;
 bool newhighscoreappear = false;
 int score = 0;
-
-string map1 = "edgeforest";
-string map2 = "darkforest";
-string map3 = "magicforest";
-
-
-
-
 
 
 
@@ -68,6 +59,27 @@ void colorgamedefault (){
     SDL_SetTextureColorMod(gmonkeyrunningrightTexture, 255, 255, 255);
 
     SDL_SetTextureColorMod(gbuttonTexture, 255, 255, 255);
+}
+
+void colorgamelow (){
+    SDL_SetTextureColorMod(gbackgroundedgeforestTexture, 100, 100, 100);
+    SDL_SetTextureColorMod(gbackgrounddarkforestTexture, 100, 100, 100);
+    SDL_SetTextureColorMod(gbackgroundmagicforestTexture, 100, 100, 100);
+
+    SDL_SetTextureColorMod(gplatformedgeforestTexture, 100, 100, 100);
+    SDL_SetTextureColorMod(gplatformdarkforestTexture, 100, 100, 100);
+    SDL_SetTextureColorMod(gplatformmagicforestTexture, 100, 100, 100);
+
+    SDL_SetTextureColorMod(gbananaTexture, 100, 100, 100);
+    SDL_SetTextureColorMod(gbeehiveTexture, 100, 100, 100);
+    SDL_SetTextureColorMod(gwarningTexture, 100, 100, 100);
+
+    SDL_SetTextureColorMod(gmonkeystaystandrightTexture, 100, 100, 100);
+    SDL_SetTextureColorMod(gmonkeystaystandleftTexture, 100, 100, 100);
+    SDL_SetTextureColorMod(gmonkeyjumpandfallleftTexture, 100, 100, 100);
+    SDL_SetTextureColorMod(gmonkeyjumpandfallrightTexture, 100, 100, 100);
+    SDL_SetTextureColorMod(gmonkeyrunningleftTexture, 100, 100, 100);
+    SDL_SetTextureColorMod(gmonkeyrunningrightTexture, 100, 100, 100);
 }
 
 void retry (){
@@ -103,77 +115,6 @@ void retry (){
     score = 0;
     textScore.display = "Score: " + to_string(score);
     textGameOver.y = SCREEN_HEIGHT+50;
-}
-
-void colorgamelow (){
-    SDL_SetTextureColorMod(gbackgroundedgeforestTexture, 100, 100, 100);
-    SDL_SetTextureColorMod(gbackgrounddarkforestTexture, 100, 100, 100);
-    SDL_SetTextureColorMod(gbackgroundmagicforestTexture, 100, 100, 100);
-
-    SDL_SetTextureColorMod(gplatformedgeforestTexture, 100, 100, 100);
-    SDL_SetTextureColorMod(gplatformdarkforestTexture, 100, 100, 100);
-    SDL_SetTextureColorMod(gplatformmagicforestTexture, 100, 100, 100);
-
-    SDL_SetTextureColorMod(gbananaTexture, 100, 100, 100);
-    SDL_SetTextureColorMod(gbeehiveTexture, 100, 100, 100);
-    SDL_SetTextureColorMod(gwarningTexture, 100, 100, 100);
-
-    SDL_SetTextureColorMod(gmonkeystaystandrightTexture, 100, 100, 100);
-    SDL_SetTextureColorMod(gmonkeystaystandleftTexture, 100, 100, 100);
-    SDL_SetTextureColorMod(gmonkeyjumpandfallleftTexture, 100, 100, 100);
-    SDL_SetTextureColorMod(gmonkeyjumpandfallrightTexture, 100, 100, 100);
-    SDL_SetTextureColorMod(gmonkeyrunningleftTexture, 100, 100, 100);
-    SDL_SetTextureColorMod(gmonkeyrunningrightTexture, 100, 100, 100);
-}
-
-
-
-
-
-
-
-
-
-
-void countdown (Uint32 x){
-    if (x<1000){
-        textCountDown.display="3";
-    } else if (x<2000){
-        textCountDown.display="2";
-    } else if (x<3000){
-        textCountDown.display="1";
-    }
-}
-
-void loadHighScores() {
-    ifstream file("high_scores.txt");
-    if (!file.is_open()) return;
-
-    string mapgame;
-    int score;
-    while (file >> mapgame >> score) {
-        highscores[mapgame] = score;
-    }
-
-    file.close();
-}
-
-void saveHighScores() {
-    ofstream file("high_scores.txt");
-    if (!file.is_open()) return;
-
-    for (auto it = highscores.begin(); it != highscores.end(); ++it) {
-    file << it->first << " " << it->second <<endl;
-    }
-
-    file.close();
-}
-
-bool checkCollision(SDL_Rect a, SDL_Rect b) {
-    return (a.x + a.w > b.x) &&
-           (a.x < b.x + b.w) &&
-           (a.y + a.h > b.y) &&
-           (a.y < b.y + b.h);
 }
 
 
@@ -257,17 +198,17 @@ int main( int argc, char* args[] ){
                             if (bannerChooseMap){
                                 if (previewEdgeForest.clicked(mouseX, mouseY)){
                                     playinggame=true;
-                                    mapChoose=map1;
+                                    mapChoose="edgeforest";
                                     retry();
                                 }
                                 if (previewDarkForest.clicked(mouseX, mouseY)){
                                     playinggame=true;
-                                    mapChoose=map2;
+                                    mapChoose="darkforest";
                                     retry();
                                 }
                                 if (previewMagicForest.clicked(mouseX, mouseY)){
                                     playinggame=true;
-                                    mapChoose=map3;
+                                    mapChoose="magicforest";
                                     retry();
                                 }
                             }
@@ -368,7 +309,13 @@ int main( int argc, char* args[] ){
                     if (resumegame){
                         colorgamelow();
                         if(currentTime>resumetime){
-                            countdown(currentTime-resumetime);
+                            if (currentTime-resumetime<1000){
+                                textCountDown.display="3";
+                            } else if (currentTime-resumetime<2000){
+                                textCountDown.display="2";
+                            } else if (currentTime-resumetime<3000){
+                                textCountDown.display="1";
+                            }
                             if (currentTime-resumetime>3000){
                                 Uint32 pausedDuration = SDL_GetTicks() - gamePausestart;
                                 beehiveTime += pausedDuration;
@@ -408,7 +355,7 @@ int main( int argc, char* args[] ){
                         if (SDL_GetTicks()-startTime>3000){
                             banana.falling();
                         }
-                        if (mapChoose==map2||mapChoose==map3){
+                        if (mapChoose=="darkforest"||mapChoose=="magicforest"){
                             if(SDL_GetTicks()-beehiveTime>7000&&SDL_GetTicks()-beehiveTime<=10000){
                                 warningappear=true;
                             } else if(SDL_GetTicks()-beehiveTime>10000){
@@ -416,7 +363,7 @@ int main( int argc, char* args[] ){
                                 warningsound=false;
                                 for(int i=0;i<2;i++){
                                     beehive[i].falling();
-                                    if(checkCollision(beehive[i].rect() ,monkey.rect())){
+                                    if(monkey.checkCollision(beehive[i])){
                                         loseCondition=true;
                                     }
                                     if(beehive[i].y+beehive[i].height==SCREEN_HEIGHT){
@@ -434,7 +381,7 @@ int main( int argc, char* args[] ){
                     }
 
 
-                    if (checkCollision(banana.rect(), monkey.rect())) {
+                    if (monkey.checkCollision(banana)) {
                         img10pts.x = banana.x;
                         img10pts.y = banana.y;
 
@@ -488,17 +435,17 @@ int main( int argc, char* args[] ){
                     SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
                     SDL_RenderClear( gRenderer );
 
-                    if (mapChoose==map1){
+                    if (mapChoose=="edgeforest"){
                         SDL_RenderCopy(gRenderer, gbackgroundedgeforestTexture, NULL, NULL);
                         for (int i=0;i<5;i++){
                             platformEdgeForest[i].renderobject(gRenderer, gplatformedgeforestTexture, NULL);
                         }
-                    } else if (mapChoose==map2){
+                    } else if (mapChoose=="darkforest"){
                         SDL_RenderCopy(gRenderer, gbackgrounddarkforestTexture, NULL, NULL);
                         for (int i=0;i<7;i++){
                             platformDarkForest[i].renderobject(gRenderer, gplatformdarkforestTexture, NULL);
                         }
-                    } else if (mapChoose==map3){
+                    } else if (mapChoose=="magicforest"){
                         SDL_RenderCopy(gRenderer, gbackgroundmagicforestTexture, NULL, NULL);
                         if (!gamePause&&!resumegame){
                             platformMagicForest[3].moving(0,180);
@@ -525,8 +472,7 @@ int main( int argc, char* args[] ){
                         }
                         for(int i=0;i<2;i++){
                             warning[i].x=beehive[i].x;
-                            SDL_Rect warningRect=warning[i].rect();
-                            SDL_RenderCopy(gRenderer, gwarningTexture, NULL, &warningRect);
+                            warning[i].renderobject(gRenderer, gwarningTexture, NULL);
                         }
                     }
 

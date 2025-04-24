@@ -2,7 +2,6 @@
 #define loadTexture__H_
 
 #include <SDL.h>
-#include <SDL_image.h>
 #include <iostream>
 using namespace std;
 

@@ -1,4 +1,12 @@
 #include "mainmenu.h"
+#include "Initclose.h"
+#include "loadFont.h"
+#include "loadTexture.h"
+#include "loadAudio.h"
+#include "object.h"
+#include "textDIsplay.h"
+#include "highscorefile.h"
+
 
 bool buttonClicked = false;
 bool playClicked = false;
@@ -8,13 +16,8 @@ bool bannerChooseMap = false;
 bool bannerHighScores = false;
 bool bannerSetting = false;
 bool turnonMusic = false;
-
-
-
-
-
 string mapChoose = " ";
-map <string, int> highscores;
+
 
 string filltext (string s){
     int n=s.length();
@@ -113,6 +116,46 @@ void setting(){
     textSetting.showText(HanaleiFillfont64,255, 70, 0, 255);
 }
 
+void highscore (){
+    string highscoreofEdgeforest = "Edge Forest:"+to_string(highscores["edgeforest"]);
+    textEdgeforest.display=filltext(highscoreofEdgeforest);
+    string highscoreofDarkforest = "Dark Forest:"+to_string(highscores["darkforest"]);
+    textDarkforest.display=filltext(highscoreofDarkforest);
+    string highscoreofMagicforest = "Magic Forest:"+to_string(highscores["magicforest"]);
+    textMagicforest.display=filltext(highscoreofMagicforest);
+
+    if (!bannerHighScores) {
+        banner[2].y -= banner[2].speed;
+        textHighscores.y -= textHighscores.speed;
+        if (banner[2].y <= SCREEN_HEIGHT /6) {
+            bannerHighScores = true;
+        }
+    }
+    banner[2].renderobject(gRenderer, gbannerTexture, NULL);
+
+    if (bannerHighScores){
+        textEdgeforest.showText(Boldonsefont14,164, 77, 63, 255 );
+        textDarkforest.showText(Boldonsefont14, 87, 84, 56, 255 );
+        textMagicforest.showText(Boldonsefont14,119, 62, 158, 255 );
+        buttonback.y = SCREEN_HEIGHT-310;
+        for (int i=0;i<3;i++){
+            buttonreset[i].renderobject(gRenderer, gbuttonbackTexture, NULL);
+            textSystem[7].textSize(Boldonsefont14);
+            textSystem[7].x = buttonreset[i].x+(buttonreset[i].width-textSystem[7].textWidth)/2;
+            textSystem[7].y = buttonreset[i].y+(buttonreset[i].height-textSystem[7].textHeight)/2;
+            textSystem[7].showText(Boldonsefont14, 181, 101, 29, 255);
+        }
+        buttonback.renderobject(gRenderer, gbuttonbackTexture, NULL);
+        textSystem[6].textSize(Boldonsefont14);
+        textSystem[6].x = buttonback.x+(buttonback.width-textSystem[6].textWidth)/2;
+        textSystem[6].y = buttonback.y+(buttonback.height-textSystem[6].textHeight)/2;
+        textSystem[6].showText(Boldonsefont14, 181, 101, 29, 255);
+    }
+    textHighscores.textSize(HanaleiFillfont64);
+    textHighscores.x = (SCREEN_WIDTH-textHighscores.textWidth)/2;
+    textHighscores.showText(HanaleiFillfont64,255, 70, 0, 255);
+}
+
 void mainmenumain (){
     if (!turnonMusic){
         Mix_PlayMusic(backgroundMusic, -1);
@@ -137,54 +180,14 @@ void mainmenumain (){
         SDL_SetTextureColorMod(gbackgroundstartTexture, 100, 100, 100);
         SDL_SetTextureColorMod(gbuttonTexture, 100, 100, 100);
 
-                        if (playClicked){
-                            mapchoose();
-                        }
-                        if (settingClicked){
-                            setting();
-                        }
-                        if (highscoresClicked){
-                            string highscoreofEdgeforest = "Edge Forest:"+to_string(highscores["edgeforest"]);
-                            textEdgeforest.display=filltext(highscoreofEdgeforest);
-                            string highscoreofDarkforest = "Dark Forest:"+to_string(highscores["darkforest"]);
-                            textDarkforest.display=filltext(highscoreofDarkforest);
-                            string highscoreofMagicforest = "Magic Forest:"+to_string(highscores["magicforest"]);
-                            textMagicforest.display=filltext(highscoreofMagicforest);
-
-
-                            if (!bannerHighScores) {
-                                banner[2].y -= banner[2].speed;
-                                textHighscores.y -= textHighscores.speed;
-                                if (banner[2].y <= SCREEN_HEIGHT /6) {
-                                    bannerHighScores = true;
-                                }
-                            }
-                            banner[2].renderobject(gRenderer, gbannerTexture, NULL);
-
-                            if (bannerHighScores){
-                                textEdgeforest.showText(Boldonsefont14,164, 77, 63, 255 );
-                                textDarkforest.showText(Boldonsefont14, 87, 84, 56, 255 );
-                                textMagicforest.showText(Boldonsefont14,119, 62, 158, 255 );
-                                buttonback.y = SCREEN_HEIGHT-310;
-
-
-                                for (int i=0;i<3;i++){
-                                    buttonreset[i].renderobject(gRenderer, gbuttonbackTexture, NULL);
-                                    textSystem[7].textSize(Boldonsefont14);
-                                    textSystem[7].x = buttonreset[i].x+(buttonreset[i].width-textSystem[7].textWidth)/2;
-                                    textSystem[7].y = buttonreset[i].y+(buttonreset[i].height-textSystem[7].textHeight)/2;
-                                    textSystem[7].showText(Boldonsefont14, 181, 101, 29, 255);
-                                }
-
-                                buttonback.renderobject(gRenderer, gbuttonbackTexture, NULL);
-                                textSystem[6].textSize(Boldonsefont14);
-                                textSystem[6].x = buttonback.x+(buttonback.width-textSystem[6].textWidth)/2;
-                                textSystem[6].y = buttonback.y+(buttonback.height-textSystem[6].textHeight)/2;
-                                textSystem[6].showText(Boldonsefont14, 181, 101, 29, 255);
-                            }
-                            textHighscores.textSize(HanaleiFillfont64);
-                            textHighscores.x = (SCREEN_WIDTH-textHighscores.textWidth)/2;
-                            textHighscores.showText(HanaleiFillfont64,255, 70, 0, 255);
-                        }
-                    }
+        if (playClicked){
+            mapchoose();
+        }
+        if (settingClicked){
+            setting();
+        }
+        if (highscoresClicked){
+            highscore();
+        }
+    }
 }

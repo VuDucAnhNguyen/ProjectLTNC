@@ -1,6 +1,8 @@
 #include "MonkeyAnimation.h"
-#include "Initclose.h"
+
 #include "loadAudio.h"
+#include "object.h"
+
 
 
 SDL_Rect defaultMonkeyRight = {0, 0 , 232, 269 };
@@ -38,13 +40,6 @@ int defaultfallvelocity =4;
 int fallvelocity =defaultfallvelocity;
 
 
-bool isStandingOn(SDL_Rect rectA,SDL_Rect rectB) {
-    bool verticalOverlap = (rectA.y + rectA.h >= rectB.y+2)&& (rectA.y + rectA.h <= rectB.y + 10);
-    bool horizontalOverlap = (rectA.x + rectA.w > rectB.x) && (rectA.x < rectB.x + rectB.w);
-
-    return verticalOverlap && horizontalOverlap;
-}
-
 void MonkeyJump (SDL_Rect*& currentClip, int &y, bool& isJump, bool& isleft){
     if(isleft){
         if (isJump) {
@@ -74,7 +69,7 @@ void MonkeyJump (SDL_Rect*& currentClip, int &y, bool& isJump, bool& isleft){
 void MonkeyFall (SDL_Rect*& currentClip, int &y,bool &isOnPlatform, bool& isJump, bool& isleft, string mapChoose){
     if(mapChoose=="darkforest"){
         for (int i = 0; i < 7; i++) {
-            if (isStandingOn(monkey.rect(), platformDarkForest[i].rect())&&!fallthrough) {
+            if (monkey.isStandingOn(platformDarkForest[i])&&!fallthrough) {
             isOnPlatform = true;
             break;
             }
@@ -82,7 +77,7 @@ void MonkeyFall (SDL_Rect*& currentClip, int &y,bool &isOnPlatform, bool& isJump
     }
     if (mapChoose=="edgeforest"){
         for (int i = 0; i < 5; i++) {
-            if (isStandingOn(monkey.rect(), platformEdgeForest[i].rect())&&!fallthrough) {
+            if (monkey.isStandingOn(platformEdgeForest[i])&&!fallthrough) {
             isOnPlatform = true;
             break;
             }
@@ -90,7 +85,7 @@ void MonkeyFall (SDL_Rect*& currentClip, int &y,bool &isOnPlatform, bool& isJump
     }
     if (mapChoose=="magicforest"){
         for (int i = 0; i < 7; i++) {
-            if (isStandingOn(monkey.rect(), platformMagicForest[i].rect())&&!fallthrough) {
+            if (monkey.isStandingOn(platformMagicForest[i])&&!fallthrough) {
             if(!isrunning){
             monkey.x+=platformMagicForest[i].speed;
             }

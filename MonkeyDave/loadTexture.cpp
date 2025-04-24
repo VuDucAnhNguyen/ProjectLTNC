@@ -1,4 +1,5 @@
 #include "loadTexture.h"
+#include <SDL_image.h>
 
 SDL_Texture* gbackgroundstartTexture = NULL;
 

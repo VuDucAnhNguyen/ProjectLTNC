@@ -1,13 +1,9 @@
 #ifndef TEXT__H_
 #define TEXT__H_
 
-#include <SDL.h>
+#include "Initclose.h"
 #include <iostream>
-#include <SDL_ttf.h>
-
 using namespace std;
-
-
 
 struct textDisplay{
     string display;

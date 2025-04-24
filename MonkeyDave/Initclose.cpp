@@ -1,6 +1,8 @@
 #include "Initclose.h"
 #include "loadFont.h"
 #include "loadTexture.h"
+#include "loadAudio.h"
+#include <iostream>
 using namespace std;
 
 const int SCREEN_WIDTH = 960;
@@ -56,6 +58,7 @@ bool init() {
 void close() {
     destroyFonts();
 	destroyTextures();
+	destroyAudio();
     SDL_DestroyRenderer(gRenderer);
     SDL_DestroyWindow(gWindow);
     gWindow = NULL;
@@ -63,6 +66,7 @@ void close() {
 
     TTF_Quit();
     IMG_Quit();
+    Mix_CloseAudio();
     SDL_Quit();
 }
 

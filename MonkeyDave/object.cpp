@@ -1,5 +1,4 @@
 #include "object.h"
-#include "Initclose.h"
 
 object::object(int _x, int _y, int _width, int _height, int _speed){
     x=_x;
@@ -9,13 +8,23 @@ object::object(int _x, int _y, int _width, int _height, int _speed){
     speed=_speed;
 }
 
-SDL_Rect object::rect() {
-    return SDL_Rect{x, y, width, height};
-}
-
 void object::renderobject(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* crop){
     SDL_Rect objectRect=SDL_Rect{x, y, width, height};
     SDL_RenderCopy(renderer,texture,  crop, &objectRect);
+}
+
+bool object::checkCollision(object other){
+    return (x + width > other.x) &&
+           (x < other.x + other.width) &&
+           (y + height > other.y) &&
+           (y < other.y + other.height);
+}
+
+bool object::isStandingOn(object other) {
+    bool verticalOverlap = (y + height >= other.y+2)&& (y + height <= other.y + 10);
+    bool horizontalOverlap = (x + width > other.x) && (x < other.x + other.width);
+
+    return verticalOverlap && horizontalOverlap;
 }
 
 bool object::clicked(int mouseX, int mouseY) {
