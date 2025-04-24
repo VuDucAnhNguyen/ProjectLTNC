@@ -25,7 +25,7 @@
     + Setting to open setting menu to adjust volume of music and sound effects without restarting the game.
   - Jump onto platforms to avoid falling off the screen.
   - Avoid obstacles like beehives or other dangerous objects.
-  - Game Over: When the monkey falls off the screen or touches an obstacle.
+  - Game Over: When the monkey falls off the screen or miss a banana or touches an obstacle.
 ### III. PROJECT STRUCTURE:
 - main.cpp: Runs the main game loop.
 - Initclose.cpp: Initializes SDL, SDL_image, SDL_ttf, and other libraries.
