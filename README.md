@@ -7,7 +7,7 @@
 1. Objective:
 - Collect as many bananas as possible to increase your score.
 2. How to Play:
-- START SCREEN:
+- START MENU:
   - Play: Opens the map selection menu to choose a map to play.
   - Highscores: Open highscores board showing past scores, Includes a Reset button to reset the high score of a map to 0.
   - Setting: Open setting menu to adjust volume of music and sound effects.
@@ -21,7 +21,7 @@
   - Press ESC to pause game:
     + press Resume to continue playing.
     + press Retry for new game.
-    + press Main menu to head back start screen.
+    + press Main menu to head back start menu.
     + press Setting to open setting menu to adjust volume of music and sound effects without restarting the gamee.
   - Jump onto platforms to avoid falling off the screen.
   - Avoid obstacles like beehives or other dangerous objects.
