@@ -1,5 +1,6 @@
 # ProjectLTNC
 ## GAME: MONKEY DAVE
+### Student: Nguyễn Vũ Đức Anh, MSV: 24022765
 ### I. INTRODUCTION:
 - Game name: MONKEY DAVE
 - Short Description: A platformer game where players control a monkey that jumps between platforms to collect bananas, avoid obstacles, and prevent falling. The game continues until the player loses.
