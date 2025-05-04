@@ -1,3 +1,3 @@
-darkforest 780
+darkforest 1120
 edgeforest 2040
-magicforest 620
+magicforest 400

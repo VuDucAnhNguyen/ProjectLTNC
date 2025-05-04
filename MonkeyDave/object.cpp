@@ -113,9 +113,9 @@ object button[9] = {
 object buttonback((SCREEN_WIDTH-200)/2,0,200,62,0);
 
 object buttonreset[3] = {
-    object(580,250,150,46,0), //edgeforest
-    object(580,300,150,46,0), //darkforest
-    object(580,350,150,46,0), //magicforest
+    object(580,250,150,46,0),
+    object(580,300,150,46,0),
+    object(580,350,150,46,0),
 };
 
 object musicbar(SCREEN_WIDTH/2-95,300,250, 40, 0);
