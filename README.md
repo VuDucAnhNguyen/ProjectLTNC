@@ -1,7 +1,6 @@
 # ProjectLTNC
 ## GAME: MONKEY DAVE
 ### Student: Nguyễn Vũ Đức Anh, MSV: 24022765
-- Ngưỡng điểm mong muốn: 8.5
 - Game tự viết có đồ họa đơn giản.
 ### I. INTRODUCTION:
 - Game name: MONKEY DAVE
