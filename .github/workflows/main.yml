@@ -16,3 +16,15 @@ jobs:
       run: |
         docker build -t monkeydave .
         docker run --rm monkeydave make
+        docker cp builder:/app/MonkeyDave/play_game .
+
+    - name: Upload Build Product
+      uses: actions/upload-artifact@v4
+      with:
+        name: MonkeyDave-Linux-Version
+
+        path: |
+          play_game
+          MonkeyDave/image_project/
+          MonkeyDave/audio_project/
+          MonkeyDave/font_project/
