@@ -10,6 +10,9 @@
 #include "mainmenu.h"
 #include "highscorefile.h"
 
+#ifdef main
+#undef main
+#endif
 
 
 const int FRAME_RATE = 60;
