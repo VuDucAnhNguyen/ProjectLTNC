@@ -40,7 +40,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download Build Files from Job 1
+      - name: Download Build Files
         uses: actions/download-artifact@v4
         with:
           name: raw-build-files
@@ -56,11 +56,21 @@ jobs:
           cp -r MonkeyDave/font_project MonkeyDave-Windows/
           zip -r MonkeyDave-Windows.zip MonkeyDave-Windows/
 
+      - name: Package Linux Zip
+        run: |
+          mkdir -p MonkeyDave-Linux
+          cp play_game MonkeyDave-Linux/
+          chmod +x MonkeyDave-Linux/play_game
+          cp -r MonkeyDave/image_project MonkeyDave-Linux/
+          cp -r MonkeyDave/audio_project MonkeyDave-Linux/
+          cp -r MonkeyDave/font_project MonkeyDave-Linux/
+          zip -r MonkeyDave-Linux.zip MonkeyDave-Linux/
+
       - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
           files: |
             MonkeyDave-Windows.zip
-            play_game
+            MonkeyDave-Linux.zip
           name: "MonkeyDave Release ${{ github.ref_name }}"
           body: "Bản phát hành chính thức phiên bản ${{ github.ref_name }}"
