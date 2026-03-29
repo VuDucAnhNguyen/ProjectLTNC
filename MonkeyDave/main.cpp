@@ -119,7 +119,7 @@ void retry (){
 
 
 
-int main( int argc, char* args[] ){
+int main(int argc, char* argv[]){
     srand(time(0));
     if( !init() ){
         cout<<"Failed to initialize!\n";
