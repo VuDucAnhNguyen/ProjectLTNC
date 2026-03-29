@@ -50,7 +50,6 @@ jobs:
         run: |
           mkdir -p MonkeyDave-Windows
           cp MonkeyDave.exe MonkeyDave-Windows/
-          # Đảm bảo bạn đã 'git add -f' các file DLL vào deps_win/bin
           cp deps_win/bin/*.dll MonkeyDave-Windows/ 2>/dev/null || echo "No DLLs found"
           cp -r MonkeyDave/image_project MonkeyDave-Windows/
           cp -r MonkeyDave/audio_project MonkeyDave-Windows/
