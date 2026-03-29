@@ -29,6 +29,7 @@ jobs:
 
         path: |
           play_game
+          MonkeyDave.exe
           MonkeyDave/image_project/
           MonkeyDave/audio_project/
           MonkeyDave/font_project/
