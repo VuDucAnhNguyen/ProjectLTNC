@@ -14,8 +14,13 @@ jobs:
 
     - name: Build and Compile with Docker
       run: |
-        docker build -t monkeydave .
-        docker run --rm -v ${{ github.workspace }}:/app_git monkeydave /bin/bash -c "make && cp play_game /app_git/"
+        docker build -t monkeydave-all .
+        
+        docker run --name linux_builder monkeydave-all make
+        docker cp linux_builder:/app/MonkeyDave/play_game .
+
+        docker run --name win_builder monkeydave-all make -f Makefile.win
+        docker cp win_builder:/app/MonkeyDave/MonkeyDave.exe .
 
     - name: Upload Build Product
       uses: actions/upload-artifact@v4
