@@ -3,9 +3,10 @@ name: MonkeyDave CI
 on:
   push:
     branches: [ "main" ]
+    tags: [ "v*" ]
 
 jobs:
-  build-game:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,11 +26,42 @@ jobs:
     - name: Upload Build Product
       uses: actions/upload-artifact@v4
       with:
-        name: MonkeyDave-Linux-Version
+        name: raw-build-files
 
         path: |
           play_game
           MonkeyDave.exe
-          MonkeyDave/image_project/
-          MonkeyDave/audio_project/
-          MonkeyDave/font_project/
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Build Files from Job 1
+        uses: actions/download-artifact@v4
+        with:
+          name: raw-build-files
+          path: .
+
+      - name: Package Windows Zip
+        run: |
+          mkdir -p MonkeyDave-Windows
+          cp MonkeyDave.exe MonkeyDave-Windows/
+          # Đảm bảo bạn đã 'git add -f' các file DLL vào deps_win/bin
+          cp deps_win/bin/*.dll MonkeyDave-Windows/ 2>/dev/null || echo "No DLLs found"
+          cp -r MonkeyDave/image_project MonkeyDave-Windows/
+          cp -r MonkeyDave/audio_project MonkeyDave-Windows/
+          cp -r MonkeyDave/font_project MonkeyDave-Windows/
+          zip -r MonkeyDave-Windows.zip MonkeyDave-Windows/
+
+      - name: Upload to GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            MonkeyDave-Windows.zip
+            play_game
+          name: "MonkeyDave Release ${{ github.ref_name }}"
+          body: "Bản phát hành chính thức phiên bản ${{ github.ref_name }}"

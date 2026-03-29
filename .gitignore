@@ -8,6 +8,7 @@ play_game
 /MonkeyDave_binary
 
 *.dll
+!deps_win/bin/*.dll
 
 Thumbs.db
 .DS_Store
