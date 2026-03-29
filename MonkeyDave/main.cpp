@@ -5,7 +5,7 @@
 #include "loadTexture.h"
 #include "loadAudio.h"
 #include "object.h"
-#include "textDIsplay.h"
+#include "textDisplay.h"
 #include "MonkeyAnimation.h"
 #include "mainmenu.h"
 #include "highscorefile.h"

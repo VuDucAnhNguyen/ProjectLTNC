@@ -1,0 +1,13 @@
+obj/
+bin/
+*.layout
+*.depend
+
+*.exe
+play_game
+/MonkeyDave_binary
+
+*.dll
+
+Thumbs.db
+.DS_Store

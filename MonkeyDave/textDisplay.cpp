@@ -1,4 +1,4 @@
-#include "textDIsplay.h"
+#include "textDisplay.h"
 
 void renderText(SDL_Renderer* renderer, TTF_Font* gfont, string text, SDL_Color color, int x, int y) {
 

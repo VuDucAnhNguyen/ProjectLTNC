@@ -4,7 +4,7 @@
 #include "loadTexture.h"
 #include "loadAudio.h"
 #include "object.h"
-#include "textDIsplay.h"
+#include "textDisplay.h"
 #include "highscorefile.h"
 
 
