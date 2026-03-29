@@ -2,10 +2,14 @@ CXX = x86_64-w64-mingw32-g++
 
 TARGET = MonkeyDave.exe
 
-LDFLAGS = -static-libgcc -static-libstdc++ -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+CXXFLAGS = -I../deps_win/include/SDL2 -D_REENTRANT
+
+LDFLAGS = -L../deps_win/lib \
+          -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf \
+          -static-libgcc -static-libstdc++
 
 all:
-	$(CXX) *.cpp -o $(TARGET) $(LDFLAGS)
+	$(CXX) *.cpp -o $(TARGET) $(CXXFLAGS) $(LDFLAGS)
 
 clean:
 	rm -f $(TARGET)
